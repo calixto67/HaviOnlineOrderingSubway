@@ -1,0 +1,168 @@
+﻿@model HaviOnlineOrdering2018.BLL.CustomerBLL
+
+
+@{
+    ViewBag.Title = "Blank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script src="~/Scripts/havicustom.js"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Input Item Code</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    @*<div class="row">
+        <div class="col-lg-offset-2">
+            <a href="~/Home/UploadExcelFile">Click here to upload Excel File</a>
+        </div>
+    </div>*@
+@using (Html.BeginForm("SubmittedInputItems", "Home", FormMethod.Post))
+{
+    <div class="row">   
+        <div class="col-lg-2">
+            <p style="font-weight:bold;">Input Item :</p>
+            <p style="font-style:italic;">(Please, input in this format :</p>
+            <p style="font-weight:bold;">item_code , qty</p>
+            <span>e.g.&nbsp;&nbsp;&nbsp;<b>0003,2</b></span><br />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>0004,5</b></span><br />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>0005</b></span><br />
+                If quantity is not specified,
+                the default quantity is 1.)
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <textarea id="ta" name="ta" class="form-control rounded-0" rows="10">@(ViewData["FileContent"] == null ? "" : ViewData["FileContent"])</textarea>
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="row">
+        <div class="col-lg-offset-2">
+            <a href="~/Home/UploadSMSFile">Click here to upload SMS File</a>
+        </div>
+        <div class="col-md-offset-2">
+            <button type="submit" class="btn btn-info btn-sm">
+                <span class="glyphicon glyphicon-shopping-cart"></span> Submit Order
+            </button>
+        </div>
+    </div>
+}
+    <div class="row">
+        <br />
+        <div class="col-lg-12">
+            @Html.Raw(ViewData["ItemsNotExist"] == null ? "" : ViewData["ItemsNotExist"])
+        </div>
+    </div>
+@using (Html.BeginForm("ShoppingCart", "Home", FormMethod.Post))
+{
+    if (Model.Orders.UploadedOrders() != null)
+    {
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-info btn-lg">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="Products">
+                            <thead>
+                                <tr>
+                                    <th>Item Code</th>
+                                    <th>Item Description</th>
+                                    <th>PK</th>
+                                    <th>CU</th>
+                                    <th>WT</th>
+                                    <th>UOM</th>
+                                    <th>Price (PhP)</th>
+                                    <th>QTY</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (HaviOnlineOrdering2018.BLL.OrdersBLL.Cart item in Model.Orders.UploadedOrders())
+                                    {
+                                        <tr>
+                                            <td tabindex="-1">@item.wrin</td>
+                                            <td>@item.item_desc</td>
+                                            <td>@item.pk</td>
+                                            <td>@item.cu</td>
+                                            <td>@item.wt</td>
+                                            <td>@item.uom</td>
+                                            <td>@item.unitprice</td>
+                                            <td>
+                                                @Html.TextBox("row_" + item.wrin, item.qty, new { size = 5, id = "row_" + item.wrin, onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                @*<input type='text' maxlength="5" id=@("row_" + item.wrin) name=@("row_" + item.wrin) onkeypress="return restrictInput(this, event, integerOnly, '', true);" value="@Html.DisplayFor(m => item.qty)" />*@
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-info btn-lg">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                </button>
+            </div>
+        </div>
+    }
+}
+
+
+
+</div>
+<!-- /.container-fluid -->
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#Products')
+				.addClass('nowrap')
+        //.dataTable({
+        //    responsive: true,
+        //    columnDefs: [
+        //		{ targets: [-1, -3], className: 'dt-body-right' },
+        //    ],
+        //    columnDefs: [{ responsivePriority: 1, targets: [0,7] }],
+        //    fixedColumns: true
+        //});
+    });
+
+    var otable = $('#Products').dataTable({
+        responsive: true,
+        columnDefs: [
+            { targets: [-1, -3], className: 'dt-body-right' },
+        ],
+        columnDefs: [{ responsivePriority: 1, targets: [0, 7] }],
+        fixedColumns: true,
+        initComplete: function (settings) {
+            $('tr td')
+             .each(function () { // loop through all matched elements
+                 $(this).removeAttr("tabindex");
+             });
+        }
+    });
+</script>

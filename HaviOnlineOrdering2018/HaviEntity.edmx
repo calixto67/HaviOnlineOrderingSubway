@@ -1,0 +1,973 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HAVIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="qty" />
+          </Key>
+          <Property Name="cart_id" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="wrin" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="qty" Type="int" Nullable="false" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="delivered_qty" Type="int" />
+          <Property Name="downloaded" Type="char" MaxLength="10" />
+          <Property Name="datedownloaded" Type="datetime" />
+          <Property Name="TextFileName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_Category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="category_code" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.tbl_Customer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="custid" />
+            <PropertyRef Name="login_email" />
+            <PropertyRef Name="password" />
+            <PropertyRef Name="first_name" />
+          </Key>
+          <Property Name="custid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="middle_name" Type="varchar" MaxLength="30" />
+          <Property Name="last_name" Type="varchar" MaxLength="30" />
+          <Property Name="phoneno" Type="varchar" MaxLength="30" />
+          <Property Name="faxno" Type="varchar" MaxLength="30" />
+          <Property Name="address" Type="varchar" MaxLength="50" />
+          <Property Name="owner_id" Type="int" />
+          <Property Name="access_type" Type="varchar" MaxLength="30" />
+          <Property Name="store_no" Type="char" MaxLength="8" />
+          <Property Name="cust_rights" Type="varchar" MaxLength="30" />
+          <Property Name="cstatus" Type="char" MaxLength="1" />
+          <Property Name="dateopened" Type="datetime" />
+          <Property Name="lastaccess" Type="int" />
+          <Property Name="dateaccess" Type="datetime" />
+          <Property Name="toggle_prc" Type="char" MaxLength="1" />
+          <Property Name="DwnldTime" Type="char" MaxLength="1" />
+          <Property Name="cust_rights2" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.tbl_item_mstr' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_item_mstr">
+          <Key>
+            <PropertyRef Name="Wrin" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="Wrin" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Item_desc" Type="char" MaxLength="100" />
+          <Property Name="Entity_code" Type="char" MaxLength="25" />
+          <Property Name="split_code" Type="char" MaxLength="2" />
+          <Property Name="abc_class" Type="char" MaxLength="2" />
+          <Property Name="uom" Type="char" MaxLength="5" />
+          <Property Name="item_cat" Type="char" MaxLength="5" />
+          <Property Name="item_type" Type="char" MaxLength="5" />
+          <Property Name="item_source" Type="char" MaxLength="5" />
+          <Property Name="shelf_life" Type="char" MaxLength="10" />
+          <Property Name="Min_Stock_level" Type="int" />
+          <Property Name="item_stat" Type="char" MaxLength="5" />
+          <Property Name="pia_no" Type="int" />
+          <Property Name="safety_level" Type="int" />
+          <Property Name="gl_acct_code" Type="char" MaxLength="10" />
+          <Property Name="item_sub_cat" Type="char" MaxLength="10" />
+          <Property Name="english_desc" Type="char" MaxLength="50" />
+          <Property Name="english_uom" Type="char" MaxLength="10" />
+          <Property Name="ret_wrin" Type="char" MaxLength="15" />
+          <Property Name="ret_desc" Type="char" MaxLength="50" />
+          <Property Name="ret_case" Type="int" />
+          <Property Name="charge_service" Type="char" MaxLength="3" />
+          <Property Name="ret_deposit" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="vat_ind" Type="char" MaxLength="3" />
+          <Property Name="case_del_unit" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="dep_wrin" Type="char" MaxLength="15" />
+          <Property Name="charge_to" Type="char" MaxLength="3" />
+          <Property Name="Effect_date" Type="datetime" />
+          <Property Name="msi_item" Type="char" MaxLength="3" />
+          <Property Name="msm_cat" Type="char" MaxLength="3" />
+          <Property Name="msm_subcat" Type="char" MaxLength="10" />
+          <Property Name="Pur_UOM" Type="char" MaxLength="10" />
+          <Property Name="dep_case" Type="char" MaxLength="10" />
+          <Property Name="hs_code" Type="char" MaxLength="10" />
+          <Property Name="whse_code" Type="char" MaxLength="10" />
+          <Property Name="updated_by" Type="char" MaxLength="10" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="status" Type="char" MaxLength="5" />
+          <Property Name="notes" Type="char" MaxLength="200" />
+          <Property Name="case_pk" Type="char" MaxLength="10" />
+          <Property Name="case_cube" Type="money" />
+          <Property Name="case_wt" Type="money" />
+          <Property Name="product_cost" Type="money" />
+          <Property Name="whse_cost" Type="money" />
+          <Property Name="std_price" Type="money" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.tbl_items' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_items">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="item_desc" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="wrin" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="item_desc" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="case_pk" Type="char" MaxLength="15" />
+          <Property Name="case_cu" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="case_we" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="std_price" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="product_cost" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="whse_cost" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="qty" Type="int" />
+          <Property Name="sup_price" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="uom" Type="char" MaxLength="10" />
+          <Property Name="as_of" Type="datetime" />
+          <Property Name="WUtility_ItemCatID" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.tbl_items_sl' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_items_sl">
+          <Key>
+            <PropertyRef Name="store_no" />
+            <PropertyRef Name="wrin" />
+          </Key>
+          <Property Name="store_no" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="wrin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Modified_by" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.tbl_SpecialItemStore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_SpecialItemStore">
+          <Key>
+            <PropertyRef Name="SpecialItemStoreID" />
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="StoreNo" />
+            <PropertyRef Name="delday_hop" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="SpecialItemStoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="wrin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="delday_hop" Type="int" Nullable="false" />
+          <Property Name="orderday_exclusion_arr" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="ord_day" Type="varchar" MaxLength="50" />
+          <Property Name="override_hopcnt" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.tbl_store' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_store">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="store_no" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="store_no" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="store_name" Type="varchar" MaxLength="50" />
+          <Property Name="delday1" Type="char" MaxLength="1" />
+          <Property Name="delday2" Type="char" MaxLength="1" />
+          <Property Name="delday3" Type="char" MaxLength="1" />
+          <Property Name="delday4" Type="char" MaxLength="1" />
+          <Property Name="delday5" Type="char" MaxLength="1" />
+          <Property Name="delday6" Type="char" MaxLength="1" />
+          <Property Name="delday7" Type="char" MaxLength="1" />
+          <Property Name="deltime1" Type="char" MaxLength="1" />
+          <Property Name="deltime2" Type="char" MaxLength="1" />
+          <Property Name="deltime3" Type="char" MaxLength="1" />
+          <Property Name="deltime4" Type="char" MaxLength="1" />
+          <Property Name="deltime5" Type="char" MaxLength="1" />
+          <Property Name="deltime6" Type="char" MaxLength="1" />
+          <Property Name="deltime7" Type="char" MaxLength="1" />
+          <Property Name="toggle_prc" Type="char" MaxLength="1" />
+          <Property Name="bill_to" Type="char" MaxLength="10" />
+          <Property Name="ship_to" Type="char" MaxLength="10" />
+          <Property Name="cust_type" Type="char" MaxLength="1" />
+          <Property Name="corp_no" Type="char" MaxLength="15" />
+          <Property Name="area_code" Type="char" MaxLength="5" />
+          <Property Name="gl_acct_code" Type="char" MaxLength="10" />
+          <Property Name="charge_service" Type="char" MaxLength="3" />
+          <Property Name="status" Type="char" MaxLength="10" />
+          <Property Name="updatedby" Type="char" MaxLength="10" />
+          <Property Name="updatedate" Type="datetime" />
+          <Property Name="cia_no" Type="int" />
+          <Property Name="dwnldtime" Type="char" MaxLength="1" />
+          <Property Name="group_id" Type="varchar" MaxLength="10" />
+          <Property Name="PortalID" Type="int" />
+          <Property Name="zcode" Type="char" MaxLength="3" />
+          <Property Name="WUtility_StoreCatID" Type="int" />
+          <Property Name="Wutility_UpdateBy" Type="int" />
+          <Property Name="Wutility_UpdateDateTime" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Transaction">
+          <Key>
+            <PropertyRef Name="Order_no" />
+            <PropertyRef Name="Store_no" />
+            <PropertyRef Name="Trans_date" />
+            <PropertyRef Name="Cart_id" />
+          </Key>
+          <Property Name="Order_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Custid" Type="int" Nullable="false" />
+          <Property Name="Store_no" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="refpo" Type="char" MaxLength="15" />
+          <Property Name="Trans_type" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Trans_date" Type="datetime" Nullable="false" />
+          <Property Name="Delivery_date" Type="datetime" Nullable="false" />
+          <Property Name="Cart_id" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Trans_status" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="careof" Type="char" MaxLength="5" />
+          <Property Name="WebUtilityID" Type="int" />
+          <Property Name="DateUnprocess" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.vw_AllowedItemsOnStore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_AllowedItemsOnStore">
+          <Key>
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="item_desc" />
+          </Key>
+          <Property Name="owner_id" Type="int" />
+          <Property Name="store_no" Type="char" MaxLength="8" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="wrin" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="item_desc" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="case_pk" Type="char" MaxLength="15" />
+          <Property Name="case_cu" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="case_we" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="uom" Type="char" MaxLength="10" />
+          <Property Name="std_price" Type="decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <EntityContainer Name="HAVIModelStoreContainer">
+          <EntitySet Name="tbl_Cart" EntityType="Self.tbl_Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Category" EntityType="Self.tbl_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Transaction" EntityType="Self.tbl_Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbl_Customer].[custid] AS [custid], 
+[tbl_Customer].[login_email] AS [login_email], 
+[tbl_Customer].[password] AS [password], 
+[tbl_Customer].[first_name] AS [first_name], 
+[tbl_Customer].[middle_name] AS [middle_name], 
+[tbl_Customer].[last_name] AS [last_name], 
+[tbl_Customer].[phoneno] AS [phoneno], 
+[tbl_Customer].[faxno] AS [faxno], 
+[tbl_Customer].[address] AS [address], 
+[tbl_Customer].[owner_id] AS [owner_id], 
+[tbl_Customer].[access_type] AS [access_type], 
+[tbl_Customer].[store_no] AS [store_no], 
+[tbl_Customer].[cust_rights] AS [cust_rights], 
+[tbl_Customer].[cstatus] AS [cstatus], 
+[tbl_Customer].[dateopened] AS [dateopened], 
+[tbl_Customer].[lastaccess] AS [lastaccess], 
+[tbl_Customer].[dateaccess] AS [dateaccess], 
+[tbl_Customer].[toggle_prc] AS [toggle_prc], 
+[tbl_Customer].[DwnldTime] AS [DwnldTime], 
+[tbl_Customer].[cust_rights2] AS [cust_rights2]
+FROM [dbo].[tbl_Customer] AS [tbl_Customer]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_item_mstr" EntityType="Self.tbl_item_mstr" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbl_item_mstr].[Wrin] AS [Wrin], 
+[tbl_item_mstr].[Item_desc] AS [Item_desc], 
+[tbl_item_mstr].[Entity_code] AS [Entity_code], 
+[tbl_item_mstr].[split_code] AS [split_code], 
+[tbl_item_mstr].[abc_class] AS [abc_class], 
+[tbl_item_mstr].[uom] AS [uom], 
+[tbl_item_mstr].[item_cat] AS [item_cat], 
+[tbl_item_mstr].[item_type] AS [item_type], 
+[tbl_item_mstr].[item_source] AS [item_source], 
+[tbl_item_mstr].[shelf_life] AS [shelf_life], 
+[tbl_item_mstr].[Min_Stock_level] AS [Min_Stock_level], 
+[tbl_item_mstr].[item_stat] AS [item_stat], 
+[tbl_item_mstr].[pia_no] AS [pia_no], 
+[tbl_item_mstr].[safety_level] AS [safety_level], 
+[tbl_item_mstr].[gl_acct_code] AS [gl_acct_code], 
+[tbl_item_mstr].[item_sub_cat] AS [item_sub_cat], 
+[tbl_item_mstr].[english_desc] AS [english_desc], 
+[tbl_item_mstr].[english_uom] AS [english_uom], 
+[tbl_item_mstr].[ret_wrin] AS [ret_wrin], 
+[tbl_item_mstr].[ret_desc] AS [ret_desc], 
+[tbl_item_mstr].[ret_case] AS [ret_case], 
+[tbl_item_mstr].[charge_service] AS [charge_service], 
+[tbl_item_mstr].[ret_deposit] AS [ret_deposit], 
+[tbl_item_mstr].[vat_ind] AS [vat_ind], 
+[tbl_item_mstr].[case_del_unit] AS [case_del_unit], 
+[tbl_item_mstr].[dep_wrin] AS [dep_wrin], 
+[tbl_item_mstr].[charge_to] AS [charge_to], 
+[tbl_item_mstr].[Effect_date] AS [Effect_date], 
+[tbl_item_mstr].[msi_item] AS [msi_item], 
+[tbl_item_mstr].[msm_cat] AS [msm_cat], 
+[tbl_item_mstr].[msm_subcat] AS [msm_subcat], 
+[tbl_item_mstr].[Pur_UOM] AS [Pur_UOM], 
+[tbl_item_mstr].[dep_case] AS [dep_case], 
+[tbl_item_mstr].[hs_code] AS [hs_code], 
+[tbl_item_mstr].[whse_code] AS [whse_code], 
+[tbl_item_mstr].[updated_by] AS [updated_by], 
+[tbl_item_mstr].[update_date] AS [update_date], 
+[tbl_item_mstr].[status] AS [status], 
+[tbl_item_mstr].[notes] AS [notes], 
+[tbl_item_mstr].[case_pk] AS [case_pk], 
+[tbl_item_mstr].[case_cube] AS [case_cube], 
+[tbl_item_mstr].[case_wt] AS [case_wt], 
+[tbl_item_mstr].[product_cost] AS [product_cost], 
+[tbl_item_mstr].[whse_cost] AS [whse_cost], 
+[tbl_item_mstr].[std_price] AS [std_price], 
+[tbl_item_mstr].[CreatedDate] AS [CreatedDate]
+FROM [dbo].[tbl_item_mstr] AS [tbl_item_mstr]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_items" EntityType="Self.tbl_items" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbl_items].[owner_id] AS [owner_id], 
+[tbl_items].[category_id] AS [category_id], 
+[tbl_items].[wrin] AS [wrin], 
+[tbl_items].[item_desc] AS [item_desc], 
+[tbl_items].[case_pk] AS [case_pk], 
+[tbl_items].[case_cu] AS [case_cu], 
+[tbl_items].[case_we] AS [case_we], 
+[tbl_items].[std_price] AS [std_price], 
+[tbl_items].[product_cost] AS [product_cost], 
+[tbl_items].[whse_cost] AS [whse_cost], 
+[tbl_items].[qty] AS [qty], 
+[tbl_items].[sup_price] AS [sup_price], 
+[tbl_items].[uom] AS [uom], 
+[tbl_items].[as_of] AS [as_of], 
+[tbl_items].[WUtility_ItemCatID] AS [WUtility_ItemCatID], 
+[tbl_items].[CreatedDate] AS [CreatedDate]
+FROM [dbo].[tbl_items] AS [tbl_items]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_items_sl" EntityType="Self.tbl_items_sl" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbl_items_sl].[store_no] AS [store_no], 
+[tbl_items_sl].[wrin] AS [wrin], 
+[tbl_items_sl].[Modified_by] AS [Modified_by]
+FROM [dbo].[tbl_items_sl] AS [tbl_items_sl]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_SpecialItemStore" EntityType="Self.tbl_SpecialItemStore" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbl_SpecialItemStore].[SpecialItemStoreID] AS [SpecialItemStoreID], 
+[tbl_SpecialItemStore].[category_id] AS [category_id], 
+[tbl_SpecialItemStore].[wrin] AS [wrin], 
+[tbl_SpecialItemStore].[StoreNo] AS [StoreNo], 
+[tbl_SpecialItemStore].[delday_hop] AS [delday_hop], 
+[tbl_SpecialItemStore].[orderday_exclusion_arr] AS [orderday_exclusion_arr], 
+[tbl_SpecialItemStore].[CreatedBy] AS [CreatedBy], 
+[tbl_SpecialItemStore].[CreatedDate] AS [CreatedDate], 
+[tbl_SpecialItemStore].[ModifiedBy] AS [ModifiedBy], 
+[tbl_SpecialItemStore].[ModifiedDate] AS [ModifiedDate], 
+[tbl_SpecialItemStore].[IsActive] AS [IsActive], 
+[tbl_SpecialItemStore].[ord_day] AS [ord_day], 
+[tbl_SpecialItemStore].[override_hopcnt] AS [override_hopcnt]
+FROM [dbo].[tbl_SpecialItemStore] AS [tbl_SpecialItemStore]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_store" EntityType="Self.tbl_store" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbl_store].[owner_id] AS [owner_id], 
+[tbl_store].[store_no] AS [store_no], 
+[tbl_store].[store_name] AS [store_name], 
+[tbl_store].[delday1] AS [delday1], 
+[tbl_store].[delday2] AS [delday2], 
+[tbl_store].[delday3] AS [delday3], 
+[tbl_store].[delday4] AS [delday4], 
+[tbl_store].[delday5] AS [delday5], 
+[tbl_store].[delday6] AS [delday6], 
+[tbl_store].[delday7] AS [delday7], 
+[tbl_store].[deltime1] AS [deltime1], 
+[tbl_store].[deltime2] AS [deltime2], 
+[tbl_store].[deltime3] AS [deltime3], 
+[tbl_store].[deltime4] AS [deltime4], 
+[tbl_store].[deltime5] AS [deltime5], 
+[tbl_store].[deltime6] AS [deltime6], 
+[tbl_store].[deltime7] AS [deltime7], 
+[tbl_store].[toggle_prc] AS [toggle_prc], 
+[tbl_store].[bill_to] AS [bill_to], 
+[tbl_store].[ship_to] AS [ship_to], 
+[tbl_store].[cust_type] AS [cust_type], 
+[tbl_store].[corp_no] AS [corp_no], 
+[tbl_store].[area_code] AS [area_code], 
+[tbl_store].[gl_acct_code] AS [gl_acct_code], 
+[tbl_store].[charge_service] AS [charge_service], 
+[tbl_store].[status] AS [status], 
+[tbl_store].[updatedby] AS [updatedby], 
+[tbl_store].[updatedate] AS [updatedate], 
+[tbl_store].[cia_no] AS [cia_no], 
+[tbl_store].[dwnldtime] AS [dwnldtime], 
+[tbl_store].[group_id] AS [group_id], 
+[tbl_store].[PortalID] AS [PortalID], 
+[tbl_store].[zcode] AS [zcode], 
+[tbl_store].[WUtility_StoreCatID] AS [WUtility_StoreCatID], 
+[tbl_store].[Wutility_UpdateBy] AS [Wutility_UpdateBy], 
+[tbl_store].[Wutility_UpdateDateTime] AS [Wutility_UpdateDateTime], 
+[tbl_store].[CreatedDate] AS [CreatedDate]
+FROM [dbo].[tbl_store] AS [tbl_store]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_AllowedItemsOnStore" EntityType="Self.vw_AllowedItemsOnStore" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_AllowedItemsOnStore].[owner_id] AS [owner_id], 
+[vw_AllowedItemsOnStore].[store_no] AS [store_no], 
+[vw_AllowedItemsOnStore].[category_id] AS [category_id], 
+[vw_AllowedItemsOnStore].[wrin] AS [wrin], 
+[vw_AllowedItemsOnStore].[item_desc] AS [item_desc], 
+[vw_AllowedItemsOnStore].[case_pk] AS [case_pk], 
+[vw_AllowedItemsOnStore].[case_cu] AS [case_cu], 
+[vw_AllowedItemsOnStore].[case_we] AS [case_we], 
+[vw_AllowedItemsOnStore].[uom] AS [uom], 
+[vw_AllowedItemsOnStore].[std_price] AS [std_price]
+FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HAVIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HAVIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Cart" EntityType="HAVIModel.tbl_Cart" />
+          <EntitySet Name="tbl_Transaction" EntityType="HAVIModel.tbl_Transaction" />
+          <EntitySet Name="tbl_items_sl" EntityType="HAVIModel.tbl_items_sl" />
+          <EntitySet Name="tbl_items" EntityType="HAVIModel.tbl_items" />
+          <EntitySet Name="tbl_item_mstr" EntityType="HAVIModel.tbl_item_mstr" />
+          <EntitySet Name="tbl_Category" EntityType="HAVIModel.tbl_Category" />
+          <EntitySet Name="tbl_store" EntityType="HAVIModel.tbl_store" />
+          <EntitySet Name="tbl_Customer" EntityType="HAVIModel.tbl_Customer" />
+          <EntitySet Name="vw_AllowedItemsOnStore" EntityType="HAVIModel.vw_AllowedItemsOnStore" />
+          <EntitySet Name="tbl_SpecialItemStore" EntityType="HAVIModel.tbl_SpecialItemStore" />
+        </EntityContainer>
+        <EntityType Name="tbl_Cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="qty" />
+          </Key>
+          <Property Name="cart_id" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="wrin" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="qty" Type="Int32" Nullable="false" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="delivered_qty" Type="Int32" />
+          <Property Name="downloaded" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="datedownloaded" Type="DateTime" Precision="3" />
+          <Property Name="TextFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_Transaction">
+          <Key>
+            <PropertyRef Name="Order_no" />
+            <PropertyRef Name="Store_no" />
+            <PropertyRef Name="Trans_date" />
+            <PropertyRef Name="Cart_id" />
+          </Key>
+          <Property Name="Order_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Custid" Type="Int32" Nullable="false" />
+          <Property Name="Store_no" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="refpo" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Trans_type" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Trans_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Delivery_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cart_id" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Trans_status" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="careof" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="WebUtilityID" Type="Int32" />
+          <Property Name="DateUnprocess" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_items_sl">
+          <Key>
+            <PropertyRef Name="store_no" />
+            <PropertyRef Name="wrin" />
+          </Key>
+          <Property Name="store_no" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="wrin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modified_by" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_items">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="item_desc" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="wrin" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="item_desc" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="case_pk" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="case_cu" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="case_we" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="std_price" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="product_cost" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="whse_cost" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="qty" Type="Int32" />
+          <Property Name="sup_price" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="uom" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="as_of" Type="DateTime" Precision="3" />
+          <Property Name="WUtility_ItemCatID" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_item_mstr">
+          <Key>
+            <PropertyRef Name="Wrin" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="Wrin" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="Item_desc" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Entity_code" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+          <Property Name="split_code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="abc_class" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="uom" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="item_cat" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="item_type" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="item_source" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="shelf_life" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Min_Stock_level" Type="Int32" />
+          <Property Name="item_stat" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="pia_no" Type="Int32" />
+          <Property Name="safety_level" Type="Int32" />
+          <Property Name="gl_acct_code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="item_sub_cat" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="english_desc" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="english_uom" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ret_wrin" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="ret_desc" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ret_case" Type="Int32" />
+          <Property Name="charge_service" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="ret_deposit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="vat_ind" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="case_del_unit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="dep_wrin" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="charge_to" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Effect_date" Type="DateTime" Precision="3" />
+          <Property Name="msi_item" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="msm_cat" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="msm_subcat" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Pur_UOM" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="dep_case" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="hs_code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="whse_code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="updated_by" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="notes" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
+          <Property Name="case_pk" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="case_cube" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="case_wt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="product_cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="whse_cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="std_price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="category_code" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_store">
+          <Key>
+            <PropertyRef Name="owner_id" />
+            <PropertyRef Name="store_no" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="store_no" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="store_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="delday1" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="delday2" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="delday3" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="delday4" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="delday5" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="delday6" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="delday7" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime1" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime2" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime3" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime4" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime5" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime6" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="deltime7" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="toggle_prc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="bill_to" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ship_to" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="cust_type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="corp_no" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="area_code" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="gl_acct_code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="charge_service" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="updatedby" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="updatedate" Type="DateTime" Precision="3" />
+          <Property Name="cia_no" Type="Int32" />
+          <Property Name="dwnldtime" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="group_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PortalID" Type="Int32" />
+          <Property Name="zcode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="WUtility_StoreCatID" Type="Int32" />
+          <Property Name="Wutility_UpdateBy" Type="Int32" />
+          <Property Name="Wutility_UpdateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="custid" />
+            <PropertyRef Name="login_email" />
+            <PropertyRef Name="password" />
+            <PropertyRef Name="first_name" />
+          </Key>
+          <Property Name="custid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login_email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="phoneno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="faxno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="owner_id" Type="Int32" />
+          <Property Name="access_type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="store_no" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="cust_rights" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cstatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="dateopened" Type="DateTime" Precision="3" />
+          <Property Name="lastaccess" Type="Int32" />
+          <Property Name="dateaccess" Type="DateTime" Precision="3" />
+          <Property Name="toggle_prc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DwnldTime" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="cust_rights2" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_AllowedItemsOnStore">
+          <Key>
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="item_desc" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" />
+          <Property Name="store_no" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="wrin" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="item_desc" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="case_pk" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="case_cu" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="case_we" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="uom" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="std_price" Type="Decimal" Precision="38" Scale="4" />
+        </EntityType>
+        <EntityType Name="tbl_SpecialItemStore">
+          <Key>
+            <PropertyRef Name="SpecialItemStoreID" />
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="wrin" />
+            <PropertyRef Name="StoreNo" />
+            <PropertyRef Name="delday_hop" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="SpecialItemStoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="wrin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StoreNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="delday_hop" Type="Int32" Nullable="false" />
+          <Property Name="orderday_exclusion_arr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="ord_day" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="override_hopcnt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HAVIModelStoreContainer" CdmEntityContainer="HAVIEntities">
+          <EntitySetMapping Name="tbl_Cart">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_Cart">
+              <MappingFragment StoreEntitySet="tbl_Cart">
+                <ScalarProperty Name="TextFileName" ColumnName="TextFileName" />
+                <ScalarProperty Name="datedownloaded" ColumnName="datedownloaded" />
+                <ScalarProperty Name="downloaded" ColumnName="downloaded" />
+                <ScalarProperty Name="delivered_qty" ColumnName="delivered_qty" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="wrin" ColumnName="wrin" />
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Transaction">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_Transaction">
+              <MappingFragment StoreEntitySet="tbl_Transaction">
+                <ScalarProperty Name="DateUnprocess" ColumnName="DateUnprocess" />
+                <ScalarProperty Name="WebUtilityID" ColumnName="WebUtilityID" />
+                <ScalarProperty Name="careof" ColumnName="careof" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="Trans_status" ColumnName="Trans_status" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cart_id" ColumnName="Cart_id" />
+                <ScalarProperty Name="Delivery_date" ColumnName="Delivery_date" />
+                <ScalarProperty Name="Trans_date" ColumnName="Trans_date" />
+                <ScalarProperty Name="Trans_type" ColumnName="Trans_type" />
+                <ScalarProperty Name="refpo" ColumnName="refpo" />
+                <ScalarProperty Name="Store_no" ColumnName="Store_no" />
+                <ScalarProperty Name="Custid" ColumnName="Custid" />
+                <ScalarProperty Name="Order_no" ColumnName="Order_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_items_sl">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_items_sl">
+              <MappingFragment StoreEntitySet="tbl_items_sl">
+                <ScalarProperty Name="Modified_by" ColumnName="Modified_by" />
+                <ScalarProperty Name="wrin" ColumnName="wrin" />
+                <ScalarProperty Name="store_no" ColumnName="store_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_items">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_items">
+              <MappingFragment StoreEntitySet="tbl_items">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="WUtility_ItemCatID" ColumnName="WUtility_ItemCatID" />
+                <ScalarProperty Name="as_of" ColumnName="as_of" />
+                <ScalarProperty Name="uom" ColumnName="uom" />
+                <ScalarProperty Name="sup_price" ColumnName="sup_price" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="whse_cost" ColumnName="whse_cost" />
+                <ScalarProperty Name="product_cost" ColumnName="product_cost" />
+                <ScalarProperty Name="std_price" ColumnName="std_price" />
+                <ScalarProperty Name="case_we" ColumnName="case_we" />
+                <ScalarProperty Name="case_cu" ColumnName="case_cu" />
+                <ScalarProperty Name="case_pk" ColumnName="case_pk" />
+                <ScalarProperty Name="item_desc" ColumnName="item_desc" />
+                <ScalarProperty Name="wrin" ColumnName="wrin" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_item_mstr">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_item_mstr">
+              <MappingFragment StoreEntitySet="tbl_item_mstr">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="std_price" ColumnName="std_price" />
+                <ScalarProperty Name="whse_cost" ColumnName="whse_cost" />
+                <ScalarProperty Name="product_cost" ColumnName="product_cost" />
+                <ScalarProperty Name="case_wt" ColumnName="case_wt" />
+                <ScalarProperty Name="case_cube" ColumnName="case_cube" />
+                <ScalarProperty Name="case_pk" ColumnName="case_pk" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="whse_code" ColumnName="whse_code" />
+                <ScalarProperty Name="hs_code" ColumnName="hs_code" />
+                <ScalarProperty Name="dep_case" ColumnName="dep_case" />
+                <ScalarProperty Name="Pur_UOM" ColumnName="Pur_UOM" />
+                <ScalarProperty Name="msm_subcat" ColumnName="msm_subcat" />
+                <ScalarProperty Name="msm_cat" ColumnName="msm_cat" />
+                <ScalarProperty Name="msi_item" ColumnName="msi_item" />
+                <ScalarProperty Name="Effect_date" ColumnName="Effect_date" />
+                <ScalarProperty Name="charge_to" ColumnName="charge_to" />
+                <ScalarProperty Name="dep_wrin" ColumnName="dep_wrin" />
+                <ScalarProperty Name="case_del_unit" ColumnName="case_del_unit" />
+                <ScalarProperty Name="vat_ind" ColumnName="vat_ind" />
+                <ScalarProperty Name="ret_deposit" ColumnName="ret_deposit" />
+                <ScalarProperty Name="charge_service" ColumnName="charge_service" />
+                <ScalarProperty Name="ret_case" ColumnName="ret_case" />
+                <ScalarProperty Name="ret_desc" ColumnName="ret_desc" />
+                <ScalarProperty Name="ret_wrin" ColumnName="ret_wrin" />
+                <ScalarProperty Name="english_uom" ColumnName="english_uom" />
+                <ScalarProperty Name="english_desc" ColumnName="english_desc" />
+                <ScalarProperty Name="item_sub_cat" ColumnName="item_sub_cat" />
+                <ScalarProperty Name="gl_acct_code" ColumnName="gl_acct_code" />
+                <ScalarProperty Name="safety_level" ColumnName="safety_level" />
+                <ScalarProperty Name="pia_no" ColumnName="pia_no" />
+                <ScalarProperty Name="item_stat" ColumnName="item_stat" />
+                <ScalarProperty Name="Min_Stock_level" ColumnName="Min_Stock_level" />
+                <ScalarProperty Name="shelf_life" ColumnName="shelf_life" />
+                <ScalarProperty Name="item_source" ColumnName="item_source" />
+                <ScalarProperty Name="item_type" ColumnName="item_type" />
+                <ScalarProperty Name="item_cat" ColumnName="item_cat" />
+                <ScalarProperty Name="uom" ColumnName="uom" />
+                <ScalarProperty Name="abc_class" ColumnName="abc_class" />
+                <ScalarProperty Name="split_code" ColumnName="split_code" />
+                <ScalarProperty Name="Entity_code" ColumnName="Entity_code" />
+                <ScalarProperty Name="Item_desc" ColumnName="Item_desc" />
+                <ScalarProperty Name="Wrin" ColumnName="Wrin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Category">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_Category">
+              <MappingFragment StoreEntitySet="tbl_Category">
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="category_code" ColumnName="category_code" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_store">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_store">
+              <MappingFragment StoreEntitySet="tbl_store">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Wutility_UpdateDateTime" ColumnName="Wutility_UpdateDateTime" />
+                <ScalarProperty Name="Wutility_UpdateBy" ColumnName="Wutility_UpdateBy" />
+                <ScalarProperty Name="WUtility_StoreCatID" ColumnName="WUtility_StoreCatID" />
+                <ScalarProperty Name="zcode" ColumnName="zcode" />
+                <ScalarProperty Name="PortalID" ColumnName="PortalID" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="dwnldtime" ColumnName="dwnldtime" />
+                <ScalarProperty Name="cia_no" ColumnName="cia_no" />
+                <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+                <ScalarProperty Name="updatedby" ColumnName="updatedby" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="charge_service" ColumnName="charge_service" />
+                <ScalarProperty Name="gl_acct_code" ColumnName="gl_acct_code" />
+                <ScalarProperty Name="area_code" ColumnName="area_code" />
+                <ScalarProperty Name="corp_no" ColumnName="corp_no" />
+                <ScalarProperty Name="cust_type" ColumnName="cust_type" />
+                <ScalarProperty Name="ship_to" ColumnName="ship_to" />
+                <ScalarProperty Name="bill_to" ColumnName="bill_to" />
+                <ScalarProperty Name="toggle_prc" ColumnName="toggle_prc" />
+                <ScalarProperty Name="deltime7" ColumnName="deltime7" />
+                <ScalarProperty Name="deltime6" ColumnName="deltime6" />
+                <ScalarProperty Name="deltime5" ColumnName="deltime5" />
+                <ScalarProperty Name="deltime4" ColumnName="deltime4" />
+                <ScalarProperty Name="deltime3" ColumnName="deltime3" />
+                <ScalarProperty Name="deltime2" ColumnName="deltime2" />
+                <ScalarProperty Name="deltime1" ColumnName="deltime1" />
+                <ScalarProperty Name="delday7" ColumnName="delday7" />
+                <ScalarProperty Name="delday6" ColumnName="delday6" />
+                <ScalarProperty Name="delday5" ColumnName="delday5" />
+                <ScalarProperty Name="delday4" ColumnName="delday4" />
+                <ScalarProperty Name="delday3" ColumnName="delday3" />
+                <ScalarProperty Name="delday2" ColumnName="delday2" />
+                <ScalarProperty Name="delday1" ColumnName="delday1" />
+                <ScalarProperty Name="store_name" ColumnName="store_name" />
+                <ScalarProperty Name="store_no" ColumnName="store_no" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Customer">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_Customer">
+              <MappingFragment StoreEntitySet="tbl_Customer">
+                <ScalarProperty Name="cust_rights2" ColumnName="cust_rights2" />
+                <ScalarProperty Name="DwnldTime" ColumnName="DwnldTime" />
+                <ScalarProperty Name="toggle_prc" ColumnName="toggle_prc" />
+                <ScalarProperty Name="dateaccess" ColumnName="dateaccess" />
+                <ScalarProperty Name="lastaccess" ColumnName="lastaccess" />
+                <ScalarProperty Name="dateopened" ColumnName="dateopened" />
+                <ScalarProperty Name="cstatus" ColumnName="cstatus" />
+                <ScalarProperty Name="cust_rights" ColumnName="cust_rights" />
+                <ScalarProperty Name="store_no" ColumnName="store_no" />
+                <ScalarProperty Name="access_type" ColumnName="access_type" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="faxno" ColumnName="faxno" />
+                <ScalarProperty Name="phoneno" ColumnName="phoneno" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="login_email" ColumnName="login_email" />
+                <ScalarProperty Name="custid" ColumnName="custid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_AllowedItemsOnStore">
+            <EntityTypeMapping TypeName="HAVIModel.vw_AllowedItemsOnStore">
+              <MappingFragment StoreEntitySet="vw_AllowedItemsOnStore">
+                <ScalarProperty Name="std_price" ColumnName="std_price" />
+                <ScalarProperty Name="uom" ColumnName="uom" />
+                <ScalarProperty Name="case_we" ColumnName="case_we" />
+                <ScalarProperty Name="case_cu" ColumnName="case_cu" />
+                <ScalarProperty Name="case_pk" ColumnName="case_pk" />
+                <ScalarProperty Name="item_desc" ColumnName="item_desc" />
+                <ScalarProperty Name="wrin" ColumnName="wrin" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="store_no" ColumnName="store_no" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SpecialItemStore">
+            <EntityTypeMapping TypeName="HAVIModel.tbl_SpecialItemStore">
+              <MappingFragment StoreEntitySet="tbl_SpecialItemStore">
+                <ScalarProperty Name="override_hopcnt" ColumnName="override_hopcnt" />
+                <ScalarProperty Name="ord_day" ColumnName="ord_day" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="orderday_exclusion_arr" ColumnName="orderday_exclusion_arr" />
+                <ScalarProperty Name="delday_hop" ColumnName="delday_hop" />
+                <ScalarProperty Name="StoreNo" ColumnName="StoreNo" />
+                <ScalarProperty Name="wrin" ColumnName="wrin" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="SpecialItemStoreID" ColumnName="SpecialItemStoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

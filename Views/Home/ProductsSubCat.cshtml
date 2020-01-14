@@ -1,0 +1,47 @@
+﻿@model IEnumerable<HaviOnlineOrdering2018.Controllers.HomeController.ProductsSubCatModel>
+
+@{
+    ViewBag.Title = "Blank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    function MM_swapImgRestore() { //v3.0
+        var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
+    }
+    function MM_swapImage() { //v3.0
+        var i, j = 0, x, a = MM_swapImage.arguments; document.MM_sr = new Array; for (i = 0; i < (a.length - 2) ; i += 3)
+            if ((x = MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
+    }
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Blank</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="container">
+        @foreach (var item in Model)
+        {
+            var image1 = item.Subcatid.ToString().Trim() + ".jpg";
+            var image2 = item.Subcatid.ToString().Trim() + "1.jpg";
+
+            if (!(File.Exists(Server.MapPath("/Images/" + image1))))
+            {
+                image1 = "blank.jpg";
+                image2 = "blank1.jpg";
+            }
+            
+            <div class="col-md-3" style="padding-left: 0px;  padding-right: 0px;">
+                <figure>
+                    <a href="~/Home/Products" class="img-thumbnail"> <img name="@item.Subcatid.ToString().Trim()" border="0" src="@("/Images/" + image1 )" alt="Food" width="200" height="200" onmouseover="this.src='@("/Images/" + image2 )'" onmouseout="this.src = '@("/Images/" + image1 )'" class="img-responsive"></a>
+                    <figcaption style="text-align:center;padding-right:80px;">@item.Description.ToString().Trim()</figcaption>
+                </figure>
+            </div>
+        }
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->

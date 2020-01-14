@@ -1,0 +1,124 @@
+﻿@model IEnumerable<HaviOnlineOrdering2018.BLL.ProductsBLL.ProductsSubCatModel>
+
+@{
+    ViewBag.Title = "Blank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    function MM_swapImgRestore() { //v3.0
+        var i, x, a = document.MM_sr; for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) x.src = x.oSrc;
+    }
+    function MM_swapImage() { //v3.0
+        var i, j = 0, x, a = MM_swapImage.arguments; document.MM_sr = new Array; for (i = 0; i < (a.length - 2) ; i += 3)
+            if ((x = MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
+    }
+</script>
+
+
+<style type="text/css">
+
+    .row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+[class*='col-'] img {
+     position: relative;
+    float: left;
+    width:  100px;
+    height: 100px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}
+
+
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">@ViewData["subcat"] </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="container">
+        <div class="row display-flex">
+            @for (int i = 0; i < Model.ToList().Count; i++)
+            {
+                var image1 = Model.ToList()[i].Subcatid.ToString().Trim() + ".jpg";
+                var image2 = Model.ToList()[i].Subcatid.ToString().Trim() + "1.jpg";
+
+                if (!(File.Exists(Server.MapPath("/Images/" + image1))))
+                {
+                    image1 = "blank.jpg";
+                    image2 = "blank1.jpg";
+                }
+                    <div class="col-md-3" style="padding-left: 0px;  padding-right: 0px;">
+                        <figure>
+                            <a href="@("/Home/Products?catid=" + Model.ToList()[i].categoryid + "&subcat=" + Model.ToList()[i].Subcatid + "&category="+ViewData["category"].ToString() )" class="img-thumbnail"> <img name="@Model.ToList()[i].Subcatid.ToString().Trim()" border="0" src="@("/Images/" + image1 )" alt="Food" width="200" height="200" onmouseover="this.src='@("/Images/" + image2 )'" onmouseout="this.src = '@("/Images/" + image1 )'" class="img-responsive"></a>
+                            <figcaption style="text-align:center;padding-right:80px;">@Model.ToList()[i].Description.ToString().Trim()</figcaption>
+                        </figure>
+                    </div>
+                if (i + 1 < Model.ToList().Count)
+                {
+                    image1 = Model.ToList()[i + 1].Subcatid.ToString().Trim() + ".jpg";
+                    image2 = Model.ToList()[i + 1].Subcatid.ToString().Trim() + "1.jpg";
+                    if (!(File.Exists(Server.MapPath("/Images/" + image1))))
+                    {
+                        image1 = "blank.jpg";
+                        image2 = "blank1.jpg";
+                    }
+                    <div class="col-md-3" style="padding-left: 0px;  padding-right: 0px;">
+                        <figure>
+                            <a href="@("/Home/Products?catid=" + Model.ToList()[i + 1].categoryid + "&subcat=" + Model.ToList()[i + 1].Subcatid + "&category=" + ViewData["category"].ToString() )" class="img-thumbnail"> <img name="@Model.ToList()[i + 1].Subcatid.ToString().Trim()" border="0" src="@("/Images/" + image1 )" alt="Food" width="200" height="200" onmouseover="this.src='@("/Images/" + image2 )'" onmouseout="this.src = '@("/Images/" + image1 )'" class="img-responsive"></a>
+                            <figcaption style="text-align:center;padding-right:80px;">@Model.ToList()[i + 1].Description.ToString().Trim()</figcaption>
+                        </figure>
+                    </div>
+                }
+                if (i + 2 < Model.ToList().Count)
+                {
+                    image1 = Model.ToList()[i + 2].Subcatid.ToString().Trim() + ".jpg";
+                    image2 = Model.ToList()[i + 2].Subcatid.ToString().Trim() + "1.jpg";
+                    if (!(File.Exists(Server.MapPath("/Images/" + image1))))
+                    {
+                        image1 = "blank.jpg";
+                        image2 = "blank1.jpg";
+                    }
+                    <div class="col-md-3" style="padding-left: 0px;  padding-right: 0px;">
+                        <figure>
+                            <a href="@("/Home/Products?catid=" + Model.ToList()[i + 2].categoryid + "&subcat=" + Model.ToList()[i + 2].Subcatid + "&category=" + ViewData["category"].ToString())" class="img-thumbnail"> <img name="@Model.ToList()[i + 2].Subcatid.ToString().Trim()" border="0" src="@("/Images/" + image1 )" alt="Food" width="200" height="200" onmouseover="this.src='@("/Images/" + image2 )'" onmouseout="this.src = '@("/Images/" + image1 )'" class="img-responsive"></a>
+                            <figcaption style="text-align:center;padding-right:80px;">@Model.ToList()[i + 2].Description.ToString().Trim()</figcaption>
+                        </figure>
+                    </div>
+                }
+                if (i + 3 < Model.ToList().Count)
+                {
+                    image1 = Model.ToList()[i + 3].Subcatid.ToString().Trim() + ".jpg";
+                    image2 = Model.ToList()[i + 3].Subcatid.ToString().Trim() + "1.jpg";
+                    if (!(File.Exists(Server.MapPath("/Images/" + image1))))
+                    {
+                        image1 = "blank.jpg";
+                        image2 = "blank1.jpg";
+                    }
+                    <div class="col-md-3" style="padding-left: 0px;  padding-right: 0px;">
+                        <figure>
+                            <a href="@("/Home/Products?catid=" + Model.ToList()[i + 3].categoryid + "&subcat=" + Model.ToList()[i + 3].Subcatid + "&category=" + ViewData["category"].ToString())" class="img-thumbnail"> <img name="@Model.ToList()[i + 3].Subcatid.ToString().Trim()" border="0" src="@("/Images/" + image1 )" alt="Food" width="200" height="200" onmouseover="this.src='@("/Images/" + image2 )'" onmouseout="this.src = '@("/Images/" + image1 )'" class="img-responsive"></a>
+                            <figcaption style="text-align:center;padding-right:80px;">@Model.ToList()[i + 3].Description.ToString().Trim()</figcaption>
+                        </figure>
+                    </div>
+                }
+
+                i = i + 3;
+            }
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Blank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#Uploadbtn").click(function () {
+            if ($("#fileInput")[0].files.length == 0) {
+                alert("Please select a file first!");
+                return false;
+            }
+        });
+    })
+
+    
+
+</script>
+
+@using (Html.BeginForm("SubmitFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Upload Excel File</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-offset-2">
+            <a href="~/Home/InputItemCode">Click here to input items</a>
+        </div>
+    </div>
+    @Html.Hidden("SMSFile", false)
+    <div class="row">
+        <div class="col-lg-2">
+            <p style="font-weight:bold;">Input Item :</p>
+            <p style="font-style:italic;">(Please, input in this format :</p>
+            <p style="font-weight:bold;">item_code , qty</p>
+            <span>e.g.&nbsp;&nbsp;&nbsp;<b>0003,2</b></span><br />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>0004,5</b></span><br />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>0005</b></span><br />
+            If quantity is not specified,
+            the default quantity is 1.)
+        </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="control-fileupload">
+                    <label for="fileInput"></label>
+                    <input type="file" name="file" id="fileInput">
+                </span>
+                <br />
+                <button type="submit" class="btn btn-info btn-sm" id="Uploadbtn">
+                    <span class="glyphicon glyphicon-upload"></span> Upload Now
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2">
+            <a href="~/Home/UploadSMSFile">Click here to upload SMS File</a>
+        </div>
+    </div>   
+</div>
+}
+<!-- /.container-fluid -->

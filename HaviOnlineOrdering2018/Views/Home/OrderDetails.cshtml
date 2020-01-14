@@ -1,0 +1,424 @@
+﻿@model HaviOnlineOrdering2018.BLL.CustomerBLL
+
+
+
+<script src="~/Scripts/havicustom.js"></script>
+
+
+<script type="text/javascript">
+
+    function UpdateTotalPrice(rowindex) {
+
+        var api = $('#_orderdetails').DataTable();
+
+        api.row(rowindex).invalidate();
+
+        //total qty
+        $(api.column(6).footer()).html(
+           parseInt(totalrow(api, 6))
+        );
+
+        //total price
+        $(api.column(7).footer()).html(
+          '₱' + parseFloat(totalrow(api, 7)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") // decimal with commas
+        );
+
+        //change color
+        $(api.column(7).footer()).css({ "color": "green" })
+    }
+
+    
+    $(function () {
+        $('#_orderdetails')
+				.addClass('nowrap');
+    
+
+    $('.selectpicker').selectpicker();
+    $('#IsSpecial').change(function () {
+        if ($(this).is(":checked")) {
+            location.href = '@Url.Action("SpecialDelSched", "Home")?Special=1';
+        }
+        else {
+            location.href = '@Url.Action("SpecialDelSched", "Home")';
+        }
+
+    });
+
+    $('#DeletePrompt').on('show.bs.modal', function (e) {
+        var itemcode = $(e.relatedTarget).data('itemcode');
+        var orderno = $(e.relatedTarget).data('orderno');
+
+        if (itemcode != null) {
+            $("#msg").html("Are you sure you want to remove item#");
+            $("#orderno").html("");
+            $("#wrin").html("<b>" + itemcode + "</b>");
+        }
+
+        if (orderno != null) {
+            $("#msg").html("Are you sure you want to remove this Order#");
+            $("#wrin").html("");
+            $("#orderno").html("<b>" + orderno + "</b>");
+
+        }
+
+    });
+
+    $('#confirmdel').click(function (e) {
+        var item = $("#wrin")[0].innerText;
+        var orderno = $("#orderno")[0].innerText;
+
+        if (item != null && item != "") {
+            location.href = '@Url.Action("DeleteItem", "Home")?itemcode=' + item + '&OrderHx=true';
+        }
+
+        if (orderno != null && orderno != "") {
+            location.href = '@Url.Action("DeleteItem", "Home")?itemcode=' + item + '&OrderHx=true' + '&OrderNo=' + orderno;
+        }
+
+    });
+
+
+    });
+
+
+
+</script>
+
+
+
+@using (Html.BeginForm("UpdateOrders", "Home", Model.Orders.OrderCartHistory.tblCart,FormMethod.Post))
+{
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <h1 class="page-header"><span class="">Order Details</span>&nbsp;&nbsp;</h1>
+        </div>
+    </div>
+
+
+    <!-- /.row -->
+    <div class="row">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td colspan="1">
+                        <form>
+                            <fieldset>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Order No.:</label>
+                                    <div class="col-md-9 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                            @Html.HiddenFor(m => m.Orders.OrderCartHistory.tblTransaction.Order_no)
+                                            @Html.HiddenFor(m => m.Orders.OrderCartHistory.OrderNo)
+                                            @Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblTransaction.Order_no, new { @class = "form-control", @disabled="disabled"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">Ref. P.O.:</label>
+                                    <div class="col-md-9 inputGroupContainer">
+                                        <div class="input-group">   
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            @Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblTransaction.refpo, Model.Orders.OrderCartHistory.tblTransaction.Trans_status == "P" ? (object)new { @class = "form-control", type = "text", @disabled = "disabled" } : new { @class = "form-control", type = "text" })
+                                            @*<input id="@Model.Orders.OrderCartHistory.tblTransaction.refpo" name="@Model.Orders.OrderCartHistory.tblTransaction.refpo" class="form-control" value="@Model.Orders.OrderCartHistory.tblTransaction.refpo.ToString().Trim()" type="text" @(Model.Orders.OrderCartHistory.tblTransaction.Trans_status == "NEW" ? "disabled" : "")>*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label">Order Date:</label>
+                                    <div class="col-md-9 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <input id="@Model.Orders.OrderCartHistory.tblTransaction.Trans_date" name="@Model.Orders.OrderCartHistory.tblTransaction.Trans_date" class="form-control" value="@Model.Orders.OrderCartHistory.tblTransaction.Trans_date" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3" for="IsSpecial">Special</label>
+                                    <div class="col-sm-6">
+                                        @Html.CheckBoxFor(m => m.Orders.OrderCartHistory.tblTransaction.Special, Model.Orders.OrderCartHistory.HasDownloadedItem ? (object)new { id = "IsSpecial", @class = "move-left", @disabled = "disabled" } : new { id = "IsSpecial", @class = "move-left" })
+                                        @*<input class="move-left" type="checkbox" id="IsSpecial" @( Model.Orders.OrderCartHistory.tblTransaction.Trans_type == "S" || ViewBag.Special != null ? "checked" : "") @( Model.Orders.OrderCartHistory.HasDownloadedItem ? "disabled" : "")>*@
+                                        <label class="control-label text-danger" style="font-size:12px"><em> (if checked, specify special delivery date)</em></label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 control-label" style="margin-right:15px;">Delivery Date:</label>
+                                    @Html.DropDownListFor(m => m.Orders.OrderCartHistory.tblTransaction.Del_date,(SelectList)ViewData["DateSelection"]
+                                    , Model.Orders.OrderCartHistory.HasDownloadedItem ? (object)new { @class = "selectpicker show-tick", data_width = "65%", data_size = "5", data_header = "Select delivery date", @disabled = "disabled" } : new { @class = "selectpicker show-tick", data_width = "65%", data_size = "5", data_header = "Select delivery date"})
+
+                                </div>
+                            </fieldset>
+                        </form>
+                    </td>
+                    <td colspan="1">
+                        <form>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">Store No.:</label>
+                                <div class="col-md-9 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        @Html.HiddenFor(m => m.StoreNo)
+                                        <input id="@Model.StoreNameNo" name="@Model.StoreNameNo" class="form-control" value="@Model.StoreNameNo" type="text" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">Login Name:</label>
+                                <div class="col-md-9 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input id="@Model.Login" name="@Model.Login" class="form-control" value="@Model.Login" type="text" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">Name:</label>
+                                <div class="col-md-9 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input id="@Model.Company" name="@Model.Company" class="form-control" value="@Model.Company" type="text" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">Status:</label>
+                                <div class="col-md-9 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input id="@Model.Orders.OrderCartHistory.tblTransaction.Status" name="@Model.Orders.OrderCartHistory.tblTransaction.Status" class="form-control" value="@Model.Orders.OrderCartHistory.tblTransaction.Status" type="text" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @{
+
+        
+    if (!Model.Orders.OrderCartHistory.tblTransaction.Special && Model.Orders.OrderCartHistory.tblTransaction.Status != "PROCESSED")
+    {
+        if (Model.Orders.OrderCartHistory.ReferenceForDeliveryPerItem.Count() > 0)
+        {
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <table bordercolor="#cccccc">
+                        <tr bgcolor="#31b0d5">
+                            <td colspan="3" style="color:white;font-weight:bold;">Reference for Delivery per item. Please remove items conflict below</td>
+                        </tr>
+                        <tr style="font-weight:bold;text-align:center;">
+                            <td width="15%" bgcolor="#eeeeee" #eeeeee"">Item Code</td>
+                            <td width="60%" bgcolor="#eeeeee">Item Descriptions</td>
+                            <td width="25%" bgcolor="#eeeeee" #eeeeee"">Suggested Delivery Date</td>
+                        </tr>
+                        @foreach (HaviOnlineOrdering2018.BLL.OrdersBLL.cReferenceForDeliveryPerItem item in Model.Orders.OrderCartHistory.ReferenceForDeliveryPerItem)
+                        {
+                            <tr>
+                                <td style='color:red;font-weight:bold;text-align:center;'>@item.ItemCode</td>
+                                <td style='color:red;font-weight:bold;text-align:center;'>@item.ItemDescription</td>
+                                <td style='color:red;font-weight:bold;text-align:center;'>@item.SystemSuggestedDelivery</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+
+        }
+    }
+
+    }
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="_orderdetails">
+                        <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Item Description</th>
+                                <th>PK</th>
+                                <th>CU</th>
+                                <th>WT</th>
+                                <th>Price (PhP)</th>
+                                <th>QTY</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align:right">Total:</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+
+
+                        <tbody>
+                        @{
+                                for (int i = 0; i < Model.Orders.OrderCartHistory.tblCart.Count; i++)
+			                    {
+			                        <tr>
+                                        @Html.HiddenFor(m => m.Orders.OrderCartHistory.tblCart[i].cart_id)
+                                        @Html.HiddenFor(m => m.Orders.OrderCartHistory.tblCart[i].wrin)
+                                        @if (new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].downloaded) == "N" || Model.Orders.OrderCartHistory.tblCart[i].downloaded == string.Empty )
+                                        {
+                                            <td><a href="#" id=@Model.Orders.OrderCartHistory.tblCart[i].wrin data-itemcode=@Model.Orders.OrderCartHistory.tblCart[i].wrin data-toggle="modal" data-ng-options="" data-target="#DeletePrompt" tabindex="-1"><span class="glyphicon glyphicon-remove-sign fa-lg"></span></a>&nbsp;&nbsp;@Html.DisplayFor(m => m.Orders.OrderCartHistory.tblCart[i].wrin)</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(m => m.Orders.OrderCartHistory.tblCart[i].wrin)</td>
+                                        }
+                                        <td>@( new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].iteminfo.Item_desc))</td>
+                                        <td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_pk</td>
+                                        <td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_cube</td>
+                                        <td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_wt</td>
+                                        <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(Model.Orders.OrderCartHistory.tblCart[i].price))) </td>
+                                        @if (new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].downloaded) == "N" || Model.Orders.OrderCartHistory.tblCart[i].downloaded == string.Empty)
+                                        {
+                                            <td>@Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblCart[i].qty, new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, @class = "item-input", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })</td>
+                                            @*<td>@Html.EditorFor(m => m.Orders.OrderCartHistory.tblCart[i].qty,  new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, @class = "item-input", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })</td>*@
+                                        }
+                                        else
+                                        {
+                                            <td>@Model.Orders.OrderCartHistory.tblCart[i].qty</td>
+                                        }
+                                        <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(Model.Orders.OrderCartHistory.tblCart[i].totalprice))) </td>
+                                    </tr>
+                                }
+
+                        }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<!-- /.container-fluid -->
+
+<div class="row">
+    <div class="col-md-3">
+    </div>
+
+    @if (Model.Orders.OrderCartHistory.tblTransaction.Trans_status != "P")
+    {
+        <div class="col-md-3 margin-bottom-lg ">
+            <button type="submit" class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-shopping-cart"></span> Update Orders
+            </button>
+        </div>
+    }
+    
+
+    @if (!Model.Orders.OrderCartHistory.HasDownloadedItem && Model.Orders.OrderCartHistory.tblTransaction.Trans_status != "P")
+    {
+        <div class="col-md-3 margin-bottom-lg ">
+            <a href="#" class="btn btn-info btn-lg" style="color:red;" data-orderno="@Model.Orders.OrderCartHistory.tblTransaction.Order_no" data-toggle="modal"  data-target="#DeletePrompt">
+                <span class="glyphicon glyphicon-remove" style="color:red"></span> Cancel Order
+            </a>
+        </div>
+    }
+    
+</div>
+}
+<!-- Modal -->
+<div class="modal fade" id="DeletePrompt" tabindex="-1" role="dialog" aria-labelledby="DeletePromptlabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <span id="msg">
+                </span>
+                <span id="wrin"></span>
+                <span id="orderno"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmdel">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+<!-- /.container-fluid -->
+<link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap-select.min.css" />
+<script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-select.min.js"></script>
+
+
+<script type="text/javascript">
+
+    var oTable = $('#_orderdetails').dataTable({
+        responsive: true,
+        columnDefs: [
+            { targets: [-1, -3], className: 'dt-body-right' }
+        ],
+        columnDefs: [{ responsivePriority: 1, targets: [0, 6] }],
+        bPaginate: false,
+        "initComplete": function (row, data, start, end, display) {
+            $('tr td')
+             .each(function () { // loop through all matched elements
+                 $(this).removeAttr("tabindex");
+             });
+
+            api = this.api(), data;
+
+
+            //// Total over this page
+
+            // Update footer
+
+            // total case pack
+            $(api.column(2).footer()).html(
+                parseFloat(totalrow(api, 2)).toFixed(2)
+            );
+
+            // total cube
+            $(api.column(3).footer()).html(
+                parseFloat(totalrow(api, 3)).toFixed(2)
+            );
+
+            // total weight
+            $(api.column(4).footer()).html(
+                parseInt(totalrow(api, 4))
+            );
+
+            //total qty
+            $(api.column(6).footer()).html(
+               parseInt(totalrow(api, 6))
+            );
+
+            // total price
+            $(api.column(7).footer()).html(
+                 '₱' + parseFloat(totalrow(api, 7)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+            );
+            //change color
+            $(api.column(7).footer()).css({ "color": "green" })
+
+            // Update footer
+        }
+
+    });
+
+
+</script>

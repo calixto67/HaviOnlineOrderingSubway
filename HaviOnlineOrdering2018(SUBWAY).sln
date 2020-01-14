@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HaviWebsite", "http://localhost:15421", "{27A313F6-D560-44B9-BEE6-8937569A509C}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_15421"
+		Debug.AspNetCompiler.PhysicalPath = "..\HAVISolution_20120925_1435H\HaviWebsite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_15421\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_15421"
+		Release.AspNetCompiler.PhysicalPath = "..\HAVISolution_20120925_1435H\HaviWebsite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_15421\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\HAVISolution_20120925_1435H\HaviWebsite\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaviOnlineOrdering2018(SUBWAY)", "HaviOnlineOrdering2018\HaviOnlineOrdering2018(SUBWAY).csproj", "{CEE973D5-3804-40BF-89DC-F3E48DA3FFFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaviLibrary", "..\HAVISolution_20120925_1435H\HaviLibrary\HaviLibrary.csproj", "{97FFA7F4-F3CA-4545-96AD-DD2407997CD5}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Subway", "http://localhost:27190", "{2992B481-D92F-4C9F-B603-CE0CACBACDE4}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_27190"
+		Debug.AspNetCompiler.PhysicalPath = "..\Subway\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_27190\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_27190"
+		Release.AspNetCompiler.PhysicalPath = "..\Subway\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_27190\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\Subway\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27A313F6-D560-44B9-BEE6-8937569A509C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A313F6-D560-44B9-BEE6-8937569A509C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A313F6-D560-44B9-BEE6-8937569A509C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A313F6-D560-44B9-BEE6-8937569A509C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CEE973D5-3804-40BF-89DC-F3E48DA3FFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEE973D5-3804-40BF-89DC-F3E48DA3FFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEE973D5-3804-40BF-89DC-F3E48DA3FFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEE973D5-3804-40BF-89DC-F3E48DA3FFFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97FFA7F4-F3CA-4545-96AD-DD2407997CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97FFA7F4-F3CA-4545-96AD-DD2407997CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97FFA7F4-F3CA-4545-96AD-DD2407997CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97FFA7F4-F3CA-4545-96AD-DD2407997CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2992B481-D92F-4C9F-B603-CE0CACBACDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2992B481-D92F-4C9F-B603-CE0CACBACDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2992B481-D92F-4C9F-B603-CE0CACBACDE4}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2992B481-D92F-4C9F-B603-CE0CACBACDE4}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
