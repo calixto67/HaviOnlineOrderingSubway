@@ -5,7 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
+
 <script src="~/Scripts/havicustom.js"></script>
+
+<style type="text/css">
+    .ItemsWithConvertionBG {
+        background-color:#ffb366!important;
+    }
+
+</style>
 
 <div class="container-fluid">
     <div class="row">
@@ -27,7 +37,7 @@
         </div>
         <input type="hidden" id="SearchValue" name="SearchValue" value="@Model.Orders.SearchValue" />
     </div>
-
+        
          <div class="row">
             <div class="col-lg-12">
                 <div class="panel-body">
@@ -37,7 +47,7 @@
                                 <tr>
                                     <th>Item Code</th>
                                     <th>Item Description</th>
-                                    <th>PK</th>
+                                    @*<th>PK</th>*@
                                     <th>CU</th>
                                     <th>WT</th>
                                     <th>UOM</th>
@@ -49,10 +59,10 @@
                                 @{
                                     foreach (HaviOnlineOrdering2018.BLL.OrdersBLL.Cart item in Model.AllowedItemsOnStore(ViewBag.catid))
                                     {
-                                        <tr>
+                                        @Html.Raw( item.wrin.Substring(item.wrin.Length-1,1)=="C" ? "<tr class='ItemsWithConvertionBG'>" : "<tr>")
                                             <td tabindex="-1">@item.wrin</td>
                                             <td>@item.item_desc</td>
-                                            <td>@item.pk</td>
+                                            @*<td>@item.pk</td>*@
                                             <td>@item.cu</td>
                                             <td>@item.wt</td>
                                             <td>@item.uom</td>
@@ -61,9 +71,9 @@
                                                 @Html.TextBox("row_" + item.wrin,null, new { size=5, id = "row_" + item.wrin, onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength="5" } )
                                                 @*<input type='text' maxlength="5" id=@("row_" + item.wrin) name=@("row_" + item.wrin) onkeypress="return restrictInput(this, event, integerOnly, '', true);" value="@Html.DisplayFor(m => item.qty)" />*@
                                             </td>
-                                        </tr>
+                                        @Html.Raw("</tr>")
                                     }
-                                }
+}
                             </tbody>
                         </table>
                     </div>

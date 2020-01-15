@@ -221,6 +221,9 @@
     color: White;
     text-decoration: none;
 }
+    .ItemsWithConvertionBG {
+        background-color:#ffb366!important;
+    }
 
 </style>
 
@@ -389,7 +392,7 @@
                                         <tr>
                                             <th>Item Code</th>
                                             <th>Item Description</th>
-                                            <th>PK</th>
+                                            @*<th>PK</th>*@
                                             <th>CU</th>
                                             <th>WT</th>
                                             <th>Unit Price</th>
@@ -414,18 +417,18 @@
                                         @{
                                             foreach (HaviOnlineOrdering2018.BLL.OrdersBLL.Cart item in Model.Orders.ShoppingCartItems)
                                             {
-                                                <tr>
+                                                @Html.Raw(item.wrin.Substring(item.wrin.Length - 1, 1) == "C" ? "<tr class='ItemsWithConvertionBG'>" : "<tr>")
                                                     <td><a href="#" id=@item.wrin data-itemcode=@item.wrin data-toggle="modal" data-ng-options="" data-target="#DeletePrompt" tabindex="-1"><span class="glyphicon glyphicon-remove-sign fa-lg"></span></a>&nbsp;&nbsp;@Html.DisplayFor(m => item.wrin)</td>
                                                     <td>@item.item_desc</td>
-                                                    <td>@(String.Format("{0:0.##}", Convert.ToDecimal(item.pk)))</td>
+                                                    @*<td>@(String.Format("{0:0.##}", Convert.ToDecimal(item.pk)))</td>*@
                                                     <td>@(String.Format("{0:0.##}", Convert.ToDecimal(item.cu)))</td>
                                                     <td>@(String.Format("{0:0.##}", Convert.ToDecimal(item.wt)))</td>
                                                     <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(item.unitprice)))</td>
                                                     <td>@Html.TextBox("row_" + item.wrin, item.qty, new { size = 5, id = "row_" + item.wrin, @class = "item-input", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', false);", maxlength = "5" })</td>
                                                     <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(item.unitprice * item.qty)))</td>
-                                                </tr>
+                                                @Html.Raw("</tr>")
                                             }
-                                        }
+}
                                     </tbody>
                                 </table>
 

@@ -736,56 +736,61 @@ namespace HaviOnlineOrdering2018.Controllers
                 {
                     Customer.Request = Request;
 
-
-                    if (Customer.OrderDeliveryDate != null)
+                    if (Customer.Orders.GetCartItems.Count > 0)
                     {
-
-                        if (!Customer.Orders.ShoppingCart.IsSpecialOrder)
+                    
+                        if (Customer.OrderDeliveryDate != null)
                         {
-                            // Order has different leadtime
-                            if (Customer.Orders.ReferenceForDeliveryPerItem.Count() > 0)
+
+                            if (!Customer.Orders.ShoppingCart.IsSpecialOrder)
                             {
-                                new UtilityBLL(this).MessageBox("Please see reference for delivery per item. Remove all items conflict in your ordering.", "Order Invalid");
-                                return View("ShoppingCart", Customer);
+                                // Order has different leadtime
+                                if (Customer.Orders.ReferenceForDeliveryPerItem.Count() > 0)
+                                {
+                                    new UtilityBLL(this).MessageBox("Please see reference for delivery per item. Remove all items conflict in your ordering.", "Order Invalid");
+                                    return View("ShoppingCart", Customer);
+                                }
+                                // Order has different leadtime
                             }
-                            // Order has different leadtime
-                        }
                       
                        
 
-                        //Add Order Transaction
-                        if (Customer.Orders.AddOrder())
-                        {
-                            if (Customer.Orders.AddOrderedItems())
+                            //Add Order Transaction
+                            if (Customer.Orders.AddOrder())
                             {
-                                new UtilityBLL(this).MessageBox("Orders were succesfully submitted!", "Orders complete");
-                                Customer.Orders.RemoveShoppingCartIitems();
+                                if (Customer.Orders.AddOrderedItems())
+                                {
+                                    new UtilityBLL(this).MessageBox("Orders were succesfully submitted!", "Orders complete");
+                                    Customer.Orders.RemoveShoppingCartIitems();
 
                                 
-                                string _firstdayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToShortDateString();
-                                string _lastdayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToShortDateString();
-                                _OrderHxParam.DateType = 1;
+                                    string _firstdayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToShortDateString();
+                                    string _lastdayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToShortDateString();
+                                    _OrderHxParam.DateType = 1;
 
-                                _OrderHxParam.date_from = Convert.ToDateTime(_firstdayOfMonth).Date;
-                                _OrderHxParam.date_to = Convert.ToDateTime(_lastdayOfMonth).Date;
+                                    _OrderHxParam.date_from = Convert.ToDateTime(_firstdayOfMonth).Date;
+                                    _OrderHxParam.date_to = Convert.ToDateTime(_lastdayOfMonth).Date;
+                                    Customer.Request = null;
+                                }
+                                else
+                                {
+                                    ViewBag.ModalHeader = "Error encounters while saving";
+                                    new UtilityBLL(this).ThrowError("Ordered Items was not successfully saved. Please contact HAVI CS for assistance!");
+                                }
                             }
+                            //Add Order Transaction
                             else
                             {
-                                ViewBag.ModalHeader = "Error encounters while saving";
-                                new UtilityBLL(this).ThrowError("Ordered Items was not successfully saved. Please contact HAVI CS for assistance!");
+                                new UtilityBLL(this).ThrowError("Order was not successfully saved. Please contact HAVI CS for assistance!");
+                                return View("ShoppingCart", Customer);
                             }
                         }
-                        //Add Order Transaction
                         else
                         {
-                            new UtilityBLL(this).ThrowError("Order was not successfully saved. Please contact HAVI CS for assistance!");
-                            return View("ShoppingCart", Customer);
+                            throw new Exception("No Default Delivery Date Found");
                         }
                     }
-                    else
-                    {
-                        throw new Exception("No Default Delivery Date Found");
-                    }
+
                     return View("OrderHistory",
                         new OrdersBLL.OrderHistoryParam(Customer)
                         {

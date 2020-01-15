@@ -84,7 +84,11 @@
 
 </script>
 
-
+<style type="text/css">
+    .ItemsWithConvertionBG {
+        background-color: #ffb366 !important;
+    }
+</style>
 
 @using (Html.BeginForm("UpdateOrders", "Home", Model.Orders.OrderCartHistory.tblCart,FormMethod.Post))
 {
@@ -265,13 +269,13 @@
 
 
                         <tbody>
-                        @{
-                                for (int i = 0; i < Model.Orders.OrderCartHistory.tblCart.Count; i++)
-			                    {
-			                        <tr>
+                       
+                                @for (int i = 0; i < Model.Orders.OrderCartHistory.tblCart.Count; i++)
+                                {
+                                    <tr @Html.Raw(Model.Orders.OrderCartHistory.tblCart[i].wrin.Trim().Substring(Model.Orders.OrderCartHistory.tblCart[i].wrin.Trim().Length - 1, 1) == "C" ? "class='ItemsWithConvertionBG'" : "")>
                                         @Html.HiddenFor(m => m.Orders.OrderCartHistory.tblCart[i].cart_id)
                                         @Html.HiddenFor(m => m.Orders.OrderCartHistory.tblCart[i].wrin)
-                                        @if (new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].downloaded) == "N" || Model.Orders.OrderCartHistory.tblCart[i].downloaded == string.Empty )
+                                        @if (new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].downloaded) == "N" || Model.Orders.OrderCartHistory.tblCart[i].downloaded == string.Empty)
                                         {
                                             <td><a href="#" id=@Model.Orders.OrderCartHistory.tblCart[i].wrin data-itemcode=@Model.Orders.OrderCartHistory.tblCart[i].wrin data-toggle="modal" data-ng-options="" data-target="#DeletePrompt" tabindex="-1"><span class="glyphicon glyphicon-remove-sign fa-lg"></span></a>&nbsp;&nbsp;@Html.DisplayFor(m => m.Orders.OrderCartHistory.tblCart[i].wrin)</td>
                                         }
@@ -297,7 +301,7 @@
                                     </tr>
                                 }
 
-                        }
+                       
                         </tbody>
                     </table>
 
