@@ -47,7 +47,7 @@
                                 <tr>
                                     <th>Item Code</th>
                                     <th>Item Description</th>
-                                    @*<th>PK</th>*@
+                                    <th style="display:none!important;">PK</th>
                                     <th>CU</th>
                                     <th>WT</th>
                                     <th>UOM</th>
@@ -62,7 +62,7 @@
                                         @Html.Raw( item.wrin.Substring(item.wrin.Length-1,1)=="C" ? "<tr class='ItemsWithConvertionBG'>" : "<tr>")
                                             <td tabindex="-1">@item.wrin</td>
                                             <td>@item.item_desc</td>
-                                            @*<td>@item.pk</td>*@
+                                            <td>@item.pk</td>
                                             <td>@item.cu</td>
                                             <td>@item.wt</td>
                                             <td>@item.uom</td>
@@ -130,13 +130,14 @@
             $('tr td')
              .each(function () { // loop through all matched elements
                  $(this).removeAttr("tabindex");
+                 $($('#Products th')[2]).css('display', 'none') //hide PK column
             });
         },
         paging : false
     });
     
     otable.fnFilter($("#SearchValue").val());
-   
+    
     
 
     //otable.on('draw.dt', function () {
