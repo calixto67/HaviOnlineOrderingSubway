@@ -96,14 +96,14 @@ namespace HaviOnlineOrdering2018.BLL
 
                     if (Customer.Request != null)
                     {
-                        if (Customer.Request.Form["IsSpecialOrder"] == null)
-                        {
-                            _deldate = Customer.OrderDeliveryDate;
-                        }
-                        else
-                        {
+                        //if (Customer.Request.Form["IsSpecialOrder"] == null)
+                        //{
+                        //    _deldate = Customer.OrderDeliveryDate;
+                        //}
+                        //else
+                        //{
                             _deldate = new UtilityBLL(null).ConvertToBoolean(Customer.Request["IsSpecialOrder"]) ? Convert.ToDateTime(Customer.Request["SpecialDeliveryDate"]) : Customer.OrderDeliveryDate;
-                        }
+                        //}
                         
                     }
 

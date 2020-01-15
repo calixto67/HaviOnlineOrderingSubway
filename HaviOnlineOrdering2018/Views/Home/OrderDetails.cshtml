@@ -247,7 +247,7 @@
                             <tr>
                                 <th>Item Code</th>
                                 <th>Item Description</th>
-                                <th>PK</th>
+                                @*<th>PK</th>*@
                                 <th>CU</th>
                                 <th>WT</th>
                                 <th>Price (PhP)</th>
@@ -259,7 +259,7 @@
                             <tr>
                                 <th colspan="2" style="text-align:right">Total:</th>
                                 <th></th>
-                                <th></th>
+                                @*<th></th>*@
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -284,7 +284,7 @@
                                             <td>@Html.DisplayFor(m => m.Orders.OrderCartHistory.tblCart[i].wrin)</td>
                                         }
                                         <td>@( new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].iteminfo.Item_desc))</td>
-                                        <td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_pk</td>
+                                        @*<td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_pk</td>*@
                                         <td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_cube</td>
                                         <td>@Model.Orders.OrderCartHistory.tblCart[i].iteminfo.case_wt</td>
                                         <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(Model.Orders.OrderCartHistory.tblCart[i].price))) </td>

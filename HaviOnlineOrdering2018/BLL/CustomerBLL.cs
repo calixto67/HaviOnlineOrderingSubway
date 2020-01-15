@@ -283,8 +283,9 @@ namespace HaviOnlineOrdering2018.BLL
                         });
                     }
                 }
-
-                return lstStoreItems;
+                //var nums = "0123456789".ToCharArray();
+                //var a = lstStoreItems.OrderBy(x => x.wrin.LastIndexOfAny(nums)).ThenBy(x => x.wrin);
+                return lstStoreItems.OrderBy(x => x.wrin).ToList();
             }
             catch (Exception ex)
             {

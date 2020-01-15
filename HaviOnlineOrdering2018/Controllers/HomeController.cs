@@ -337,7 +337,7 @@ namespace HaviOnlineOrdering2018.Controllers
                 if (Customer.EntityID != null)
                 {
                     ViewBag.SpecialDeliveryDate = Customer.Orders.ShoppingCart.SpecialDeliveryDate;
-                    if (GetAllItemsOrdered(frm))
+                    if (GetAllItemsOrdered(Request))
                     {
                         
                     }
@@ -731,11 +731,21 @@ namespace HaviOnlineOrdering2018.Controllers
                 DateTime? accdel;
                 bool? ar;
 
-
                 if (Customer.EntityID != null)
                 {
-                    Customer.Request = Request;
-
+                    if (Customer.Orders.GetCartItems.Count == 0)
+                    {
+                        return View("OrderHistory",
+                        new OrdersBLL.OrderHistoryParam(Customer)
+                        {
+                            date_from = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1),
+                            date_to = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1),
+                            DateType = 1
+                        });
+                    }
+                    Customer.Request = Request.Form.Count > 0 ? Request : Customer.Request;
+                    GetAllItemsOrdered(Request);
+                    
                     if (Customer.Orders.GetCartItems.Count > 0)
                     {
                     
@@ -770,7 +780,7 @@ namespace HaviOnlineOrdering2018.Controllers
 
                                     _OrderHxParam.date_from = Convert.ToDateTime(_firstdayOfMonth).Date;
                                     _OrderHxParam.date_to = Convert.ToDateTime(_lastdayOfMonth).Date;
-                                    Customer.Request = null;
+
                                 }
                                 else
                                 {
@@ -846,14 +856,14 @@ namespace HaviOnlineOrdering2018.Controllers
             //Session["_Customer"] = Customer;
         }
 
-        public bool GetAllItemsOrdered(FormCollection frm)
+        public bool GetAllItemsOrdered(HttpRequestBase req)
         { 
             try 
 	        {
-                if (frm.Count > 0)
+                if (req.Form.Count > 0)
                 {
                     //List all item code submitted
-                    var _ItemsOrdered = frm.AllKeys.Where(x => new UtilityBLL(null).IsInteger(frm[x])).ToList();
+                    var _ItemsOrdered = req.Form.AllKeys.Where(x => new UtilityBLL(null).IsInteger(req.Form[x])).ToList();
                     //Convert Item Code to Array
                     var _Wrin = _ItemsOrdered.Select(x => x.Replace("row_", "")).ToArray();
                     //Remove Duplicate Items
@@ -892,7 +902,7 @@ namespace HaviOnlineOrdering2018.Controllers
                             unitprice = Convert.ToDecimal(item.std_price),
                             catid = item.category_id,
                             cat_desc = item.cat_desc,
-                            qty = Convert.ToInt32(frm["row_" + item.wrin.ToString().Trim()])
+                            qty = Convert.ToInt32(req.Form["row_" + item.wrin.ToString().Trim()])
                         });
                     }
                 }
