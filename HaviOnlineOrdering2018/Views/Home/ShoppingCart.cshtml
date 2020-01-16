@@ -44,33 +44,33 @@
               
                 // Update footer
 
-                // total case pack
+                //// total case pack
+                //$(api.column(2).footer()).html(
+                //    parseFloat(totalrow(api, 2)).toFixed(2)
+                //);
+
+                // total cube
                 $(api.column(2).footer()).html(
                     parseFloat(totalrow(api, 2)).toFixed(2)
                 );
 
-                // total cube
+                // total weight
                 $(api.column(3).footer()).html(
                     parseFloat(totalrow(api, 3)).toFixed(2)
                 );
 
-                // total weight
-                $(api.column(4).footer()).html(
-                    parseFloat(totalrow(api, 4)).toFixed(2)
-                );
-
                 //total qty
-                $(api.column(6).footer()).html(
-                   parseInt(totalrow(api, 6))
+                $(api.column(5).footer()).html(
+                   parseInt(totalrow(api, 5))
                 );
 
 
                 // total price
-                $(api.column(7).footer()).html(
-                     '₱' + parseFloat(totalrow(api, 7)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                $(api.column(6).footer()).html(
+                     '₱' + parseFloat(totalrow(api, 6)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 );
                 //change color
-                $(api.column(7).footer()).css({ "color": "green" })
+                $(api.column(6).footer()).css({ "color": "green" })
 
                 // Update footer
             }
@@ -148,8 +148,8 @@
             var $tds = $row.find("td");             // Finds all children <td> elements
 
 
-            var avgqty = parseInt($($tds[7]).text().toString().trim()); //Avg Order Qty
-            var qty = parseInt($($($tds[6]).find("input")[0]).val()); // Order Qty
+            var avgqty = parseInt($($tds[6]).text().toString().trim()); //Avg Order Qty
+            var qty = parseInt($($($tds[5]).find("input")[0]).val()); // Order Qty
 
             if (avgqty != null || avgqty != isNaN) {
                 if (qty != null && qty > avgqty) {
@@ -351,7 +351,7 @@
 
 
 
-    if (Model.Orders.ReferenceForDeliveryPerItem.Count() > 0)
+    if (Model.Orders.ReferenceForDeliveryPerItem.Count() > 0 && ViewBag.Submitted != null)
     {
         <div class="row">
             <div class="col-lg-2"></div>

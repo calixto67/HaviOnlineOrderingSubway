@@ -728,8 +728,8 @@ namespace HaviOnlineOrdering2018.Controllers
             {
                 OrdersBLL.OrderHistoryParam _OrderHxParam = new OrdersBLL.OrderHistoryParam(Customer);
                 ViewBag.OrderisInvalid = false;
-                DateTime? accdel;
-                bool? ar;
+                ViewBag.Submitted = true;
+                
 
                 if (Customer.EntityID != null)
                 {
