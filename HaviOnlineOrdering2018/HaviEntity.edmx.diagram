@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bac0fbceb98a41dea78c3904d5bbeffa" Name="Diagram1" ZoomLevel="96">
+      <Diagram DiagramId="bac0fbceb98a41dea78c3904d5bbeffa" Name="Diagram1" ZoomLevel="70">
         <EntityTypeShape EntityType="HAVIModel.tbl_Cart" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="HAVIModel.tbl_Transaction" Width="1.5" PointX="11.375" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HAVIModel.tbl_items_sl" Width="1.5" PointX="0.75" PointY="0.75" />
@@ -15,6 +15,7 @@
         <EntityTypeShape EntityType="HAVIModel.tbl_Customer" Width="1.5" PointX="4.75" PointY="4.375" />
         <EntityTypeShape EntityType="HAVIModel.vw_AllowedItemsOnStore" Width="1.5" PointX="9.375" PointY="5.75" />
         <EntityTypeShape EntityType="HAVIModel.tbl_SpecialItemStore" Width="1.5" PointX="11.375" PointY="5.25" />
+        <EntityTypeShape EntityType="HAVIModel.ItemWithConversion" Width="1.5" PointX="9.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

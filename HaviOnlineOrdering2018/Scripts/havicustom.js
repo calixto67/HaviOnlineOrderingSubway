@@ -54,11 +54,11 @@ var mobilenumberonly = /^[0-9]{0,}$/g;
 
 function IsValid(qtyfield, inner) {
     if (qtyfield.value >= inner) {
-        var tooltip = document.getElementById("tooltip");
-        tooltip.innerHTML = qtyfield.title;
-        tooltip.style.display = "block";
-        tooltip.style.top = qtyfield.offsetTop - tooltip.offsetHeight + "px";
-        tooltip.style.left = qtyfield.offsetLeft + "px";
+        //var tooltip = document.getElementById("tooltip");
+        //tooltip.innerHTML = qtyfield.title;
+        //tooltip.style.display = "block";
+        //tooltip.style.top = qtyfield.offsetTop - tooltip.offsetHeight + "px";
+        //tooltip.style.left = qtyfield.offsetLeft + "px";
         qtyfield.value = "";
         qtyfield.classList.add("error");
         setTimeout(function () { qtyfield.focus(); }, 20);

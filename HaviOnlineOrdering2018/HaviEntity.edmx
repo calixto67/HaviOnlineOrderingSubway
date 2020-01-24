@@ -5,6 +5,28 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="HAVIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SUBWAY.dbo.ItemWithConversion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ItemWithConversion">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Category" />
+            <PropertyRef Name="Wrin" />
+            <PropertyRef Name="Case" />
+            <PropertyRef Name="Inners" />
+            <PropertyRef Name="UOM" />
+            <PropertyRef Name="CreatedDatetime" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Wrin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShelfLife_days" Type="int" />
+          <Property Name="Case" Type="int" Nullable="false" />
+          <Property Name="Inners" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="UOM" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDatetime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_Cart">
           <Key>
             <PropertyRef Name="cart_id" />
@@ -60,12 +82,9 @@ warning 6002: The table/view 'SUBWAY.dbo.tbl_Customer' does not have a primary k
           <Property Name="DwnldTime" Type="char" MaxLength="1" />
           <Property Name="cust_rights2" Type="char" MaxLength="10" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SUBWAY.dbo.tbl_item_mstr' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_item_mstr">
           <Key>
             <PropertyRef Name="Wrin" />
-            <PropertyRef Name="CreatedDate" />
           </Key>
           <Property Name="Wrin" Type="char" MaxLength="15" Nullable="false" />
           <Property Name="Item_desc" Type="char" MaxLength="100" />
@@ -255,6 +274,7 @@ warning 6002: The table/view 'SUBWAY.dbo.vw_AllowedItemsOnStore' does not have a
             <PropertyRef Name="category_id" />
             <PropertyRef Name="wrin" />
             <PropertyRef Name="item_desc" />
+            <PropertyRef Name="Inners" />
           </Key>
           <Property Name="owner_id" Type="int" />
           <Property Name="store_no" Type="char" MaxLength="8" />
@@ -266,11 +286,26 @@ warning 6002: The table/view 'SUBWAY.dbo.vw_AllowedItemsOnStore' does not have a
           <Property Name="case_we" Type="decimal" Precision="19" Scale="4" />
           <Property Name="uom" Type="char" MaxLength="10" />
           <Property Name="std_price" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="Inners" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityContainer Name="HAVIModelStoreContainer">
           <EntitySet Name="tbl_Cart" EntityType="Self.tbl_Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Category" EntityType="Self.tbl_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_item_mstr" EntityType="Self.tbl_item_mstr" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Transaction" EntityType="Self.tbl_Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemWithConversion" EntityType="Self.ItemWithConversion" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[ItemWithConversion].[ID] AS [ID], 
+[ItemWithConversion].[Category] AS [Category], 
+[ItemWithConversion].[Wrin] AS [Wrin], 
+[ItemWithConversion].[ShelfLife_days] AS [ShelfLife_days], 
+[ItemWithConversion].[Case] AS [Case], 
+[ItemWithConversion].[Inners] AS [Inners], 
+[ItemWithConversion].[UOM] AS [UOM], 
+[ItemWithConversion].[CreatedBy] AS [CreatedBy], 
+[ItemWithConversion].[CreatedDatetime] AS [CreatedDatetime]
+FROM [dbo].[ItemWithConversion] AS [ItemWithConversion]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [tbl_Customer].[custid] AS [custid], 
@@ -294,56 +329,6 @@ warning 6002: The table/view 'SUBWAY.dbo.vw_AllowedItemsOnStore' does not have a
 [tbl_Customer].[DwnldTime] AS [DwnldTime], 
 [tbl_Customer].[cust_rights2] AS [cust_rights2]
 FROM [dbo].[tbl_Customer] AS [tbl_Customer]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tbl_item_mstr" EntityType="Self.tbl_item_mstr" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[tbl_item_mstr].[Wrin] AS [Wrin], 
-[tbl_item_mstr].[Item_desc] AS [Item_desc], 
-[tbl_item_mstr].[Entity_code] AS [Entity_code], 
-[tbl_item_mstr].[split_code] AS [split_code], 
-[tbl_item_mstr].[abc_class] AS [abc_class], 
-[tbl_item_mstr].[uom] AS [uom], 
-[tbl_item_mstr].[item_cat] AS [item_cat], 
-[tbl_item_mstr].[item_type] AS [item_type], 
-[tbl_item_mstr].[item_source] AS [item_source], 
-[tbl_item_mstr].[shelf_life] AS [shelf_life], 
-[tbl_item_mstr].[Min_Stock_level] AS [Min_Stock_level], 
-[tbl_item_mstr].[item_stat] AS [item_stat], 
-[tbl_item_mstr].[pia_no] AS [pia_no], 
-[tbl_item_mstr].[safety_level] AS [safety_level], 
-[tbl_item_mstr].[gl_acct_code] AS [gl_acct_code], 
-[tbl_item_mstr].[item_sub_cat] AS [item_sub_cat], 
-[tbl_item_mstr].[english_desc] AS [english_desc], 
-[tbl_item_mstr].[english_uom] AS [english_uom], 
-[tbl_item_mstr].[ret_wrin] AS [ret_wrin], 
-[tbl_item_mstr].[ret_desc] AS [ret_desc], 
-[tbl_item_mstr].[ret_case] AS [ret_case], 
-[tbl_item_mstr].[charge_service] AS [charge_service], 
-[tbl_item_mstr].[ret_deposit] AS [ret_deposit], 
-[tbl_item_mstr].[vat_ind] AS [vat_ind], 
-[tbl_item_mstr].[case_del_unit] AS [case_del_unit], 
-[tbl_item_mstr].[dep_wrin] AS [dep_wrin], 
-[tbl_item_mstr].[charge_to] AS [charge_to], 
-[tbl_item_mstr].[Effect_date] AS [Effect_date], 
-[tbl_item_mstr].[msi_item] AS [msi_item], 
-[tbl_item_mstr].[msm_cat] AS [msm_cat], 
-[tbl_item_mstr].[msm_subcat] AS [msm_subcat], 
-[tbl_item_mstr].[Pur_UOM] AS [Pur_UOM], 
-[tbl_item_mstr].[dep_case] AS [dep_case], 
-[tbl_item_mstr].[hs_code] AS [hs_code], 
-[tbl_item_mstr].[whse_code] AS [whse_code], 
-[tbl_item_mstr].[updated_by] AS [updated_by], 
-[tbl_item_mstr].[update_date] AS [update_date], 
-[tbl_item_mstr].[status] AS [status], 
-[tbl_item_mstr].[notes] AS [notes], 
-[tbl_item_mstr].[case_pk] AS [case_pk], 
-[tbl_item_mstr].[case_cube] AS [case_cube], 
-[tbl_item_mstr].[case_wt] AS [case_wt], 
-[tbl_item_mstr].[product_cost] AS [product_cost], 
-[tbl_item_mstr].[whse_cost] AS [whse_cost], 
-[tbl_item_mstr].[std_price] AS [std_price], 
-[tbl_item_mstr].[CreatedDate] AS [CreatedDate]
-FROM [dbo].[tbl_item_mstr] AS [tbl_item_mstr]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tbl_items" EntityType="Self.tbl_items" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -441,7 +426,8 @@ FROM [dbo].[tbl_store] AS [tbl_store]</DefiningQuery>
 [vw_AllowedItemsOnStore].[case_cu] AS [case_cu], 
 [vw_AllowedItemsOnStore].[case_we] AS [case_we], 
 [vw_AllowedItemsOnStore].[uom] AS [uom], 
-[vw_AllowedItemsOnStore].[std_price] AS [std_price]
+[vw_AllowedItemsOnStore].[std_price] AS [std_price], 
+[vw_AllowedItemsOnStore].[Inners] AS [Inners]
 FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -460,6 +446,7 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           <EntitySet Name="tbl_Customer" EntityType="HAVIModel.tbl_Customer" />
           <EntitySet Name="vw_AllowedItemsOnStore" EntityType="HAVIModel.vw_AllowedItemsOnStore" />
           <EntitySet Name="tbl_SpecialItemStore" EntityType="HAVIModel.tbl_SpecialItemStore" />
+          <EntitySet Name="ItemWithConversions" EntityType="HAVIModel.ItemWithConversion" />
         </EntityContainer>
         <EntityType Name="tbl_Cart">
           <Key>
@@ -487,7 +474,7 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           <Property Name="Order_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Custid" Type="Int32" Nullable="false" />
           <Property Name="Store_no" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="refpo" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="refpo" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
           <Property Name="Trans_type" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Trans_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Delivery_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -537,7 +524,6 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
         <EntityType Name="tbl_item_mstr">
           <Key>
             <PropertyRef Name="Wrin" />
-            <PropertyRef Name="CreatedDate" />
           </Key>
           <Property Name="Wrin" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
           <Property Name="Item_desc" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
@@ -672,6 +658,7 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
             <PropertyRef Name="category_id" />
             <PropertyRef Name="wrin" />
             <PropertyRef Name="item_desc" />
+            <PropertyRef Name="Inners" />
           </Key>
           <Property Name="owner_id" Type="Int32" />
           <Property Name="store_no" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
@@ -683,6 +670,7 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           <Property Name="case_we" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="uom" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="std_price" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="Inners" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="tbl_SpecialItemStore">
           <Key>
@@ -708,6 +696,26 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           <Property Name="IsActive" Type="Int32" Nullable="false" />
           <Property Name="ord_day" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="override_hopcnt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ItemWithConversion">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Category" />
+            <PropertyRef Name="Wrin" />
+            <PropertyRef Name="Case" />
+            <PropertyRef Name="Inners" />
+            <PropertyRef Name="UOM" />
+            <PropertyRef Name="CreatedDatetime" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Wrin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ShelfLife_days" Type="Int32" />
+          <Property Name="Case" Type="Int32" Nullable="false" />
+          <Property Name="Inners" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="UOM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -785,6 +793,7 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           <EntitySetMapping Name="tbl_item_mstr">
             <EntityTypeMapping TypeName="HAVIModel.tbl_item_mstr">
               <MappingFragment StoreEntitySet="tbl_item_mstr">
+                <ScalarProperty Name="Entity_code" ColumnName="Entity_code" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="std_price" ColumnName="std_price" />
                 <ScalarProperty Name="whse_cost" ColumnName="whse_cost" />
@@ -828,7 +837,6 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
                 <ScalarProperty Name="uom" ColumnName="uom" />
                 <ScalarProperty Name="abc_class" ColumnName="abc_class" />
                 <ScalarProperty Name="split_code" ColumnName="split_code" />
-                <ScalarProperty Name="Entity_code" ColumnName="Entity_code" />
                 <ScalarProperty Name="Item_desc" ColumnName="Item_desc" />
                 <ScalarProperty Name="Wrin" ColumnName="Wrin" />
               </MappingFragment>
@@ -916,6 +924,7 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
           <EntitySetMapping Name="vw_AllowedItemsOnStore">
             <EntityTypeMapping TypeName="HAVIModel.vw_AllowedItemsOnStore">
               <MappingFragment StoreEntitySet="vw_AllowedItemsOnStore">
+                <ScalarProperty Name="Inners" ColumnName="Inners" />
                 <ScalarProperty Name="std_price" ColumnName="std_price" />
                 <ScalarProperty Name="uom" ColumnName="uom" />
                 <ScalarProperty Name="case_we" ColumnName="case_we" />
@@ -945,6 +954,21 @@ FROM [dbo].[vw_AllowedItemsOnStore] AS [vw_AllowedItemsOnStore]</DefiningQuery>
                 <ScalarProperty Name="wrin" ColumnName="wrin" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
                 <ScalarProperty Name="SpecialItemStoreID" ColumnName="SpecialItemStoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemWithConversions">
+            <EntityTypeMapping TypeName="HAVIModel.ItemWithConversion">
+              <MappingFragment StoreEntitySet="ItemWithConversion">
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UOM" ColumnName="UOM" />
+                <ScalarProperty Name="Inners" ColumnName="Inners" />
+                <ScalarProperty Name="Case" ColumnName="Case" />
+                <ScalarProperty Name="ShelfLife_days" ColumnName="ShelfLife_days" />
+                <ScalarProperty Name="Wrin" ColumnName="Wrin" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

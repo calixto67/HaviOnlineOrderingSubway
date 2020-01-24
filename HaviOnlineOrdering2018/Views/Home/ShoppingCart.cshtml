@@ -224,6 +224,9 @@
     .ItemsWithConvertionBG {
         background-color:#ffb366!important;
     }
+     .error {
+        border-color: red;
+    }
     .textfield .hint {
         display: none;
         position: absolute;
@@ -447,11 +450,11 @@
                                                                 if (item.inners > 0)
                                                                 {
                                                                     <div class=hint>For orders equivalent <br/>to a Case, kindly use the <br />Item Code in Case issuance.</div>
-                                                                    @Html.TextBox("row_" + item.wrin, null, new { size = 5, title = "Input only less than the inner per case value", id = "row_" + item.wrin, onblur = "return IsValid(this," + item.inners + ")", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                                    @Html.TextBox("row_" + item.wrin, item.qty, new { size = 5, id = "row_" + item.wrin, onblur = "return IsValid(this," + item.inners + ")", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
                                                                 }
                                                                 else
                                                                 {
-                                                                    @Html.TextBox("row_" + item.wrin, null, new { size = 5, id = "row_" + item.wrin, onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                                    @Html.TextBox("row_" + item.wrin, item.qty, new { size = 5, id = "row_" + item.wrin, onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
                                                                 }
                                                             }
                                                             else

@@ -167,7 +167,7 @@ namespace HaviOnlineOrdering2018.BLL
         }
 
 
-
+        
 
         public List<SelectListItem> RegularDeliverySchedule
         {

@@ -24,5 +24,6 @@ namespace HaviOnlineOrdering2018
         public Nullable<decimal> case_we { get; set; }
         public string uom { get; set; }
         public Nullable<decimal> std_price { get; set; }
+        public string Inners { get; set; }
     }
 }

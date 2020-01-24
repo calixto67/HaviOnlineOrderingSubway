@@ -35,5 +35,6 @@ namespace HaviOnlineOrdering2018
         public DbSet<tbl_Customer> tbl_Customer { get; set; }
         public DbSet<vw_AllowedItemsOnStore> vw_AllowedItemsOnStore { get; set; }
         public DbSet<tbl_SpecialItemStore> tbl_SpecialItemStore { get; set; }
+        public DbSet<ItemWithConversion> ItemWithConversions { get; set; }
     }
 }

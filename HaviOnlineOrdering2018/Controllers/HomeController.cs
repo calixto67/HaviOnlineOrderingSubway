@@ -883,10 +883,10 @@ namespace HaviOnlineOrdering2018.Controllers
                                                   case_we = itemmstr.case_wt,
                                                   std_price = webitem.std_price,
                                                   category_id = webitem.category_id,
-                                                  cat_desc = cat.category_name
+                                                  cat_desc = cat.category_name ,
+                                                  inners = dbContext.ItemWithConversions.AsEnumerable().Where(x => x.Wrin.Replace("C", "") == itemmstr.Wrin).Count() > 0 ? dbContext.ItemWithConversions.AsEnumerable().Where(x => x.Wrin.Replace("C", "") == itemmstr.Wrin).Select(x => x.Inners).FirstOrDefault() : "0"
                                               }
                                              ).Distinct();
-
                     // Add new items
                     foreach (var item in _ItemsOrderedwInfo)
                     {
@@ -902,7 +902,8 @@ namespace HaviOnlineOrdering2018.Controllers
                             unitprice = Convert.ToDecimal(item.std_price),
                             catid = item.category_id,
                             cat_desc = item.cat_desc,
-                            qty = Convert.ToInt32(req.Form["row_" + item.wrin.ToString().Trim()])
+                            qty = Convert.ToInt32(req.Form["row_" + item.wrin.ToString().Trim()]),
+                            inners = Convert.ToInt32(item.inners.ToString().Trim())
                         });
                     }
                 }

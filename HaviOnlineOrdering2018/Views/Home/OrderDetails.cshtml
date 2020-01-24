@@ -86,7 +86,26 @@
 
 <style type="text/css">
     .ItemsWithConvertionBG {
-        background-color: #ffb366 !important;
+        background-color:#ffb366!important;
+    }
+     .error {
+        border-color: red;
+    }
+    .textfield .hint {
+        display: none;
+        position: absolute;
+        width: 15em;
+        bottom: 1.7em;
+        background: #ff9;
+        padding: 0 0.2em;
+        border: solid 1px;
+        margin-left: -211px;
+        font-weight: bold;
+        color: red;
+    }
+
+    .textfield {
+        position: relative;
     }
 </style>
 
@@ -290,7 +309,28 @@
                                         <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(Model.Orders.OrderCartHistory.tblCart[i].price))) </td>
                                         @if (new HaviOnlineOrdering2018.BLL.UtilityBLL(null).ConvertToString(Model.Orders.OrderCartHistory.tblCart[i].downloaded) == "N" || Model.Orders.OrderCartHistory.tblCart[i].downloaded == string.Empty)
                                         {
-                                            <td>@Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblCart[i].qty, new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, @class = "item-input", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })</td>
+                                            <td>
+                                                <div class=textfield>
+                                                    @if (Model.EntityID == "2")
+                                                    {
+                                                        List<ItemWithConversion> _litems = Model.Orders.ItemWithConversion.Where(x => x.Wrin.Replace("C","") == Model.Orders.OrderCartHistory.tblCart[i].wrin.ToString().Trim()).ToList();
+                                                        int _inner = _litems.Count > 0 ? Convert.ToInt32(_litems.FirstOrDefault().Inners) : 0;
+                                                        if (_inner > 0)
+                                                        {
+                                                            <div class=hint>For orders equivalent <br/>to a Case, kindly use the <br />Item Code in Case issuance.</div>
+                                                            @Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblCart[i].qty, new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, onblur = "return IsValid(this," + _inner + ")", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblCart[i].qty, new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m.Orders.OrderCartHistory.tblCart[i].qty, new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, @class = "item-input", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                    }
+                                                </div>
+                                            </td>
                                             @*<td>@Html.EditorFor(m => m.Orders.OrderCartHistory.tblCart[i].qty,  new { size = 5, id = "row_" + Model.Orders.OrderCartHistory.tblCart[i].wrin, @class = "item-input", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })</td>*@
                                         }
                                         else

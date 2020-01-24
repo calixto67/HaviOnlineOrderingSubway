@@ -176,6 +176,17 @@ namespace HaviOnlineOrdering2018.BLL
             }
         }
 
+        public IEnumerable<ItemWithConversion> ItemWithConversion
+        {
+            get 
+            {
+                using (HAVIEntities _entity = new HAVIEntities())
+                {
+                    return _entity.ItemWithConversions.AsEnumerable().ToList();
+                }
+            }
+        }
+
         public void ClearOrderCartHistory()
         {
             this.mOrderCartHistory = null;
@@ -541,6 +552,7 @@ namespace HaviOnlineOrdering2018.BLL
 
 
         }
+
 
         public partial class OrderHistoryParam
         {
