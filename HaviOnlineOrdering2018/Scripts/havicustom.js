@@ -52,6 +52,24 @@ var usernameOnly = /[0-9A-Za-z\._-]/g;
 var mobilenumberonly = /^[0-9]{0,}$/g;
 
 
+function IsValid(qtyfield, inner) {
+    if (qtyfield.value >= inner) {
+        var tooltip = document.getElementById("tooltip");
+        tooltip.innerHTML = qtyfield.title;
+        tooltip.style.display = "block";
+        tooltip.style.top = qtyfield.offsetTop - tooltip.offsetHeight + "px";
+        tooltip.style.left = qtyfield.offsetLeft + "px";
+        qtyfield.value = "";
+        qtyfield.classList.add("error");
+        setTimeout(function () { qtyfield.focus(); }, 20);
+        qtyfield.parentNode.firstElementChild.style.display = 'block';
+    }
+    else {
+        qtyfield.classList.remove("error");
+        qtyfield.parentNode.firstElementChild.style.display = 'none';
+    }
+}
+
 function restrictInput(myfield, e, restrictionType, checkdot, IsMobileNo) {
     if (!e) var e = window.event
     if (e.keyCode) code = e.keyCode;

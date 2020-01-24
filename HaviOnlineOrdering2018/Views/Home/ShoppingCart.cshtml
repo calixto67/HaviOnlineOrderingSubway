@@ -7,7 +7,7 @@
 <script src="~/Scripts/havicustom.js"></script>
 
 
-
+<script src="~/Scripts/havicustom.js"></script>
 <script type="text/javascript">
 
     window.onbeforeunload = function (e) {
@@ -224,6 +224,22 @@
     .ItemsWithConvertionBG {
         background-color:#ffb366!important;
     }
+    .textfield .hint {
+        display: none;
+        position: absolute;
+        width: 15em;
+        bottom: 1.7em;
+        background: #ff9;
+        padding: 0 0.2em;
+        border: solid 1px;
+        margin-left: -211px;
+        font-weight: bold;
+        color: red;
+    }
+
+    .textfield {
+        position: relative;
+    }
 
 </style>
 
@@ -424,7 +440,27 @@
                                                     <td>@(String.Format("{0:0.##}", Convert.ToDecimal(item.cu)))</td>
                                                     <td>@(String.Format("{0:0.##}", Convert.ToDecimal(item.wt)))</td>
                                                     <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(item.unitprice)))</td>
-                                                    <td>@Html.TextBox("row_" + item.wrin, item.qty, new { size = 5, id = "row_" + item.wrin, @class = "item-input", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', false);", maxlength = "5" })</td>
+                                                    <td>
+                                                        <div class=textfield>
+                                                            @if (Model.EntityID == "2")
+                                                            {
+                                                                if (item.inners > 0)
+                                                                {
+                                                                    <div class=hint>For orders equivalent <br/>to a Case, kindly use the <br />Item Code in Case issuance.</div>
+                                                                    @Html.TextBox("row_" + item.wrin, null, new { size = 5, title = "Input only less than the inner per case value", id = "row_" + item.wrin, onblur = "return IsValid(this," + item.inners + ")", onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.TextBox("row_" + item.wrin, null, new { size = 5, id = "row_" + item.wrin, onkeypress = "return restrictInput(this, event, integerOnly, '', true);", maxlength = "5" })
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBox("row_" + item.wrin, item.qty, new { size = 5, id = "row_" + item.wrin, @class = "item-input", onkeyup = "return validateInputs(this)", onkeypress = "return restrictInput(this, event, integerOnly, '', false);", maxlength = "5" })
+                                                            }
+                                                        </div>
+                                                        
+                                                    </td>
                                                     <td>@( "₱" + String.Format("{0:n}", Convert.ToDecimal(item.unitprice * item.qty)))</td>
                                                 @Html.Raw("</tr>")
                                             }

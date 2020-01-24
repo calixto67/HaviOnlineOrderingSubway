@@ -280,6 +280,8 @@ namespace HaviOnlineOrdering2018.BLL
                             uom = item["uom"].ToString().Trim()
                             ,
                             wrin = item["wrin"].ToString().Trim()
+                            ,
+                            inners = Convert.ToInt32(item["Inners"].ToString().Trim())
                         });
                     }
                 }

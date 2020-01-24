@@ -238,6 +238,8 @@ namespace HaviOnlineOrdering2018.BLL
                                 wrin = item.wrin.ToString().Trim() //item["wrin"].ToString().Trim()
                                 ,
                                 qty = Convert.ToInt32(mqty)
+                                ,
+                                inners = Convert.ToInt32(mqty)
                             });
                         }
                     }
@@ -326,6 +328,7 @@ namespace HaviOnlineOrdering2018.BLL
             public string wt { get; set; }
             public string uom { get; set; }
             public int qty { get; set; }
+            public int inners { get; set; }
             public decimal unitprice { get; set; }
             //public string avgorderqty { get; set; }
             public decimal? totalprice { get; set; }
